@@ -1,0 +1,24 @@
+{
+  "name": "grender",
+  "version": "0.0.1",
+  "description": "A lightweight canvas library for 2D.",
+  "main": "lib/index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/nashaofu/grender.git"
+  },
+  "keywords": [
+    "canvas",
+    "2D",
+    "render"
+  ],
+  "author": "nashaofu",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/nashaofu/grender/issues"
+  },
+  "homepage": "https://github.com/nashaofu/grender#readme"
+}

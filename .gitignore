@@ -107,4 +107,4 @@ dist
 .env.local
 .env.*.local
 
-/build
+/lib

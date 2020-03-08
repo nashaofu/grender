@@ -49,15 +49,21 @@ export default class Shape extends Events {
   }
 
   get t (): number[] {
-    return [this.matrix[4], this.matrix[5]]
+    const [, , , , e, f] = this.matrix
+
+    const radian = -(this.r / 180) * Math.PI
+    return [Math.cos(radian) * e - Math.sin(radian) * f, Math.sin(radian) * e + Math.cos(radian) * f]
   }
 
   get s (): number[] {
-    return [this.matrix[0], this.matrix[3]]
+    const [a, b, c, d] = this.matrix
+    return [Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)), Math.sqrt(Math.pow(c, 2) + Math.pow(d, 2))]
   }
 
-  get r (): number[] {
-    return [this.matrix[0], this.matrix[3]]
+  get r (): number {
+    const [a, b] = this.matrix
+
+    return (Math.atan2(b, a) / Math.PI) * 180
   }
 
   translate ([translateX, translateY]: number[]): this {
@@ -77,6 +83,8 @@ export default class Shape extends Events {
   }
 
   rotate (rotate: number): this {
+    const radian = (rotate / 180) * Math.PI
+    this.matrix = multiply(this.matrix, [Math.cos(radian), Math.sin(radian), -Math.sin(radian), Math.cos(radian), 0, 0])
     if (this.parent) {
       this.parent.render()
     }
@@ -88,6 +96,7 @@ export default class Shape extends Events {
     return this
   }
 
+  // eslint-disable-next-line @typescript-eslint/no-unused-vars
   render (ctx: CanvasRenderingContext2D, shape: unknown): this {
     return this
   }

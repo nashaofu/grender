@@ -1,0 +1,49 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>grender</title>
+    <style>
+      html,
+      body,
+      #app {
+        margin: 0;
+        padding: 0;
+        width: 100%;
+        height: 100%;
+      }
+    </style>
+  </head>
+  <body>
+    <noscript><strong>很抱歉，没有JavaScript，网站不能正常工作。请启用JavaScript。</strong></noscript>
+    <div id="app"></div>
+    <script src="./require.js"></script>
+    <script>
+      requirejs(['../lib/index.js'], function(GRender) {
+        console.log(GRender)
+        const circle = new GRender.Circle({
+          shape: {
+            x: 50,
+            y: 100,
+            r: 40
+          }
+        })
+        console.log(circle)
+        circle.on('click', () => console.log('on'))
+        circle.once('click', () => console.log('once'))
+
+        let i = 0
+        setInterval(() => {
+          i++
+          circle.emit('click')
+          if (i === 10) {
+            circle.off()
+          }
+        }, 1000)
+        const grender = new GRender.default(document.querySelector('#app'))
+        grender.add(circle)
+      })
+    </script>
+  </body>
+</html>

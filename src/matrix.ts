@@ -1,9 +1,9 @@
 /**
  * 二维度坐标矩阵乘法
- * @param {Number[6]} m1
- * @param {Number[6]} m2
+ * @param {number[6]} m1
+ * @param {number[6]} m2
  */
-export function multiply (m1, m2) {
+export function multiply (m1: number[], m2: number[]): number[] {
   const m = [0, 0, 0, 0, 0, 0]
   m[0] = m1[0] * m2[0] + m1[2] * m2[1]
   m[1] = m1[1] * m2[0] + m1[3] * m2[1]

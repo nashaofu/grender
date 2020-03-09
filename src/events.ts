@@ -1,7 +1,7 @@
 const EVENTS = Symbol('Events')
 
 export interface Handler {
-  type: 'on' | 'once'
+  once: boolean
   handler: (...args: unknown[]) => unknown
 }
 
@@ -12,12 +12,6 @@ export interface Handlers {
 export default class Events {
   readonly [EVENTS]: Handlers = {}
 
-  constructor (...args: string[]) {
-    args.forEach(event => {
-      this[EVENTS][event] = []
-    })
-  }
-
   /**
    * 绑定事件
    * @param event
@@ -25,7 +19,7 @@ export default class Events {
    */
   on (event: string, handler: (...args: unknown[]) => unknown): this | never {
     if (!this[EVENTS][event]) {
-      throw new Error(`unknown event: ${event}`)
+      this[EVENTS][event] = []
     }
 
     if (typeof handler !== 'function') {
@@ -33,7 +27,7 @@ export default class Events {
     }
 
     this[EVENTS][event].push({
-      type: 'on',
+      once: false,
       handler
     })
     return this
@@ -46,7 +40,7 @@ export default class Events {
    */
   once (event: string, handler: (...args: unknown[]) => unknown): this | never {
     if (!this[EVENTS][event]) {
-      throw new Error(`unknown event: ${event}`)
+      this[EVENTS][event] = []
     }
 
     if (typeof handler !== 'function') {
@@ -54,7 +48,7 @@ export default class Events {
     }
 
     this[EVENTS][event].push({
-      type: 'once',
+      once: true,
       handler
     })
     return this
@@ -70,18 +64,16 @@ export default class Events {
   off (event?: string, handler?: (...args: unknown[]) => unknown): this | never {
     if (!event) {
       Object.keys(this[EVENTS]).forEach(key => {
-        this[EVENTS][key] = []
+        delete this[EVENTS][key]
       })
     } else {
-      const handlers = this[EVENTS][event]
-      if (!handlers) {
-        throw new Error(`unknown event: ${event}`)
-      }
+      const handlers = this[EVENTS][event] || []
+
       // handler不存在，则移除该事件的所有监听
       if (!handler) {
         this[EVENTS][event] = []
       } else {
-        const index = handlers.findIndex((f: Handler) => f.handler === handler)
+        const index = handlers.findIndex((h: Handler) => h.handler === handler)
         if (index > -1) {
           handlers.splice(index, 1)
         }
@@ -96,16 +88,13 @@ export default class Events {
    * @param args
    */
   emit (event: string, ...args: unknown[]): this {
-    const handlers = this[EVENTS][event]
-    if (!handlers) {
-      throw new Error(`unknown event: ${event}`)
-    }
+    const handlers = this[EVENTS][event] || []
 
-    handlers.forEach((f: Handler) => {
-      if (f.type === 'once') {
-        this.off(event, f.handler)
+    handlers.forEach((h: Handler) => {
+      if (h.once) {
+        this.off(event, h.handler)
       }
-      f.handler.call(this, ...args)
+      h.handler.call(this, ...args)
     })
     return this
   }

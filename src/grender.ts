@@ -7,17 +7,7 @@ export default class GRender extends Events {
   ctx: CanvasRenderingContext2D | null
   shapes: Shape[] = []
   constructor (el: HTMLElement) {
-    super(
-      'click',
-      'dbclick',
-      'mouseenter',
-      'mousemove',
-      'mouseleave',
-      'mousedown',
-      'mouseup',
-      'mouseover',
-      'contextmenu'
-    )
+    super()
     this.el = el
     this.canvas = document.createElement('canvas')
     this.canvas.width = this.el.offsetWidth
@@ -58,9 +48,11 @@ export default class GRender extends Events {
   }
 
   render (): this {
-    if (this.ctx != null) {
-      this.shapes.forEach(shape => shape.render(<CanvasRenderingContext2D> this.ctx, shape.shape))
-      console.log('render')
+    if (this.ctx !== null) {
+      this.ctx.clearRect(0, 0, this.width, this.height)
+      this.shapes.forEach(shape => {
+        shape.render(<CanvasRenderingContext2D> this.ctx, shape.shape)
+      })
     }
     return this
   }

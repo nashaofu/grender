@@ -22,17 +22,7 @@ export default class Shape extends Events {
   shape: ShapeOptsShape
 
   constructor ({ t, s, r, z, shape }: ShapeOpts) {
-    super(
-      'click',
-      'dbclick',
-      'mouseenter',
-      'mousemove',
-      'mouseleave',
-      'mousedown',
-      'mouseup',
-      'mouseover',
-      'contextmenu'
-    )
+    super()
     if (t != null) {
       this.translate(t)
     }
@@ -66,24 +56,24 @@ export default class Shape extends Events {
     return (Math.atan2(b, a) / Math.PI) * 180
   }
 
-  translate ([translateX, translateY]: number[]): this {
-    this.matrix = multiply(this.matrix, [1, 0, 0, 1, translateX, translateY])
+  translate ([tx, ty]: number[]): this {
+    this.matrix = multiply(this.matrix, [1, 0, 0, 1, tx, ty])
     if (this.parent) {
       this.parent.render()
     }
     return this
   }
 
-  scale ([scaleX, scaleY]: number[]): this {
-    this.matrix = multiply(this.matrix, [scaleX, 0, 0, scaleY, 0, 0])
+  scale ([sx, sy]: number[]): this {
+    this.matrix = multiply(this.matrix, [sx, 0, 0, sy, 0, 0])
     if (this.parent) {
       this.parent.render()
     }
     return this
   }
 
-  rotate (rotate: number): this {
-    const radian = (rotate / 180) * Math.PI
+  rotate (r: number): this {
+    const radian = (r / 180) * Math.PI
     this.matrix = multiply(this.matrix, [Math.cos(radian), Math.sin(radian), -Math.sin(radian), Math.cos(radian), 0, 0])
     if (this.parent) {
       this.parent.render()

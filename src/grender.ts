@@ -1,11 +1,12 @@
 import Events from './events'
-import Shape from './shape'
+import ShapeSubclass from './shapes/shapeSubclass'
+import Rect from './shapes/rect'
 
 export default class GRender extends Events {
   el: HTMLElement
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D | null
-  shapes: Shape[] = []
+  shapes: ShapeSubclass<unknown>[] = []
   constructor (el: HTMLElement) {
     super()
     this.el = el
@@ -31,14 +32,14 @@ export default class GRender extends Events {
     return this
   }
 
-  add (shape: Shape): this {
+  add<T> (shape: ShapeSubclass<T>): this {
     shape.parent = this
     this.shapes.push(shape)
     this.render()
     return this
   }
 
-  remove (shape: Shape): this {
+  remove<T> (shape: ShapeSubclass<T>): this {
     const index = this.shapes.findIndex(item => item === shape)
     if (index !== -1) {
       this.shapes.splice(index, 1)
@@ -51,6 +52,7 @@ export default class GRender extends Events {
     if (this.ctx !== null) {
       this.ctx.clearRect(0, 0, this.width, this.height)
       this.shapes.forEach(shape => {
+        ;(<CanvasRenderingContext2D> this.ctx).beginPath()
         shape.render(<CanvasRenderingContext2D> this.ctx, shape.shape)
       })
     }

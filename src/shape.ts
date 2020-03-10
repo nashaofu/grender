@@ -7,21 +7,14 @@ export interface ShapeOpts {
   s?: number[]
   r?: number
   z?: number
-  shape: ShapeOptsShape
-  [key: string]: unknown
-}
-
-export interface ShapeOptsShape {
-  [key: string]: unknown
 }
 
 export default class Shape extends Events {
   z = 0
   parent?: GRender
   matrix = [1, 0, 0, 1, 0, 0]
-  shape: ShapeOptsShape
 
-  constructor ({ t, s, r, z, shape }: ShapeOpts) {
+  constructor ({ t, s, r, z }: ShapeOpts) {
     super()
     if (t != null) {
       this.translate(t)
@@ -35,7 +28,6 @@ export default class Shape extends Events {
     if (z != null) {
       this.setZ(z)
     }
-    this.shape = shape
   }
 
   get t (): number[] {
@@ -83,11 +75,6 @@ export default class Shape extends Events {
 
   setZ (z: number): this {
     this.z = z
-    return this
-  }
-
-  // eslint-disable-next-line @typescript-eslint/no-unused-vars
-  render (ctx: CanvasRenderingContext2D, shape: unknown): this {
     return this
   }
 }

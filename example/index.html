@@ -21,7 +21,8 @@
     <script src="./require.js"></script>
     <script>
       requirejs(['../lib/index.js'], function(GRender) {
-        console.log(GRender)
+        const grender = new GRender.default(document.querySelector('#app'))
+
         const rect = new GRender.Rect({
           shape: {
             x: 10,
@@ -31,9 +32,18 @@
           }
         })
         rect.translate([10, 20])
+        const circle = new GRender.Circle({
+          shape: {
+            x: 10,
+            y: 20,
+            r: 40
+          }
+        })
+        circle.translate([100, 200])
+
         console.log(rect)
-        const grender = new GRender.default(document.querySelector('#app'))
         grender.add(rect)
+        grender.add(circle)
         console.log(grender)
       })
     </script>

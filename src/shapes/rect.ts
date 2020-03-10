@@ -1,15 +1,26 @@
-import Shape from '../shape'
 import { invert } from '../matrix'
+import Shape, { ShapeOpts } from '../shape'
+import ShapeSubclass from './shapeSubclass'
 
-interface RectShape {
+export interface RectShape {
   x: number
   y: number
   width: number
   height: number
 }
 
-export default class Rect extends Shape {
+export interface RectOpts extends ShapeOpts {
+  shape: RectShape
+}
+
+export default class Rect extends Shape implements ShapeSubclass<RectShape> {
   name = 'Rect'
+  shape: RectShape
+
+  constructor (opts: RectOpts) {
+    super(opts)
+    this.shape = opts.shape
+  }
 
   render (ctx: CanvasRenderingContext2D, shape: RectShape): this {
     const { x, y, width, height } = shape

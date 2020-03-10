@@ -1,20 +1,30 @@
-import Shape from '../shape'
+import { invert } from '../matrix'
+import Shape, { ShapeOpts } from '../shape'
+import ShapeSubclass from './shapeSubclass'
 
-interface CircleShape {
+export interface CircleShape {
   x: number
   y: number
   r: number
 }
 
-export default class Circle extends Shape {
+export interface CircleOpts extends ShapeOpts {
+  shape: CircleShape
+}
+
+export default class Circle extends Shape implements ShapeSubclass<CircleShape> {
   name = 'Circle'
+  shape: CircleShape
+
+  constructor (opts: CircleOpts) {
+    super(opts)
+    this.shape = opts.shape
+  }
 
   render (ctx: CanvasRenderingContext2D, shape: CircleShape): this {
     const { x, y, r } = shape
-    ctx.fillStyle = 'red'
-    ctx.strokeStyle = 'red'
-    console.log(shape)
-    ctx.arc(x, y, r, 0, 2 * Math.PI)
+    const [x1, y1] = invert(this.matrix, [x, y, 1])
+    ctx.arc(x1, y1, r, 0, 2 * Math.PI)
     ctx.stroke()
     return this
   }

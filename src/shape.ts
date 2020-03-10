@@ -45,11 +45,11 @@ export default class Shape extends Events {
   get r (): number {
     const [a, b] = this.matrix
 
-    return (Math.atan2(b, a) / Math.PI) * 180
+    return -(Math.atan2(b, a) / Math.PI) * 180
   }
 
   translate ([tx, ty]: number[]): this {
-    this.matrix = multiply(this.matrix, [1, 0, 0, 1, tx, ty])
+    this.matrix = multiply([1, 0, 0, 1, tx, ty], this.matrix)
     if (this.parent) {
       this.parent.render()
     }
@@ -66,7 +66,9 @@ export default class Shape extends Events {
 
   rotate (r: number): this {
     const radian = (r / 180) * Math.PI
-    this.matrix = multiply(this.matrix, [Math.cos(radian), Math.sin(radian), -Math.sin(radian), Math.cos(radian), 0, 0])
+    const sin = Math.sin(radian)
+    const cos = Math.cos(radian)
+    this.matrix = multiply(this.matrix, [cos, -sin, sin, cos, 0, 0])
     if (this.parent) {
       this.parent.render()
     }

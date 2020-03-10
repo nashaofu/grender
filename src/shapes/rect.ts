@@ -1,4 +1,3 @@
-import { invert } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
 import ShapeSubclass from './shapeSubclass'
 
@@ -22,11 +21,10 @@ export default class Rect extends Shape implements ShapeSubclass<RectShape> {
     this.shape = opts.shape
   }
 
-  render (ctx: CanvasRenderingContext2D, shape: RectShape): this {
-    const { x, y, width, height } = shape
-    const [x1, y1] = invert(this.matrix, [x, y, 1])
-    const [x2, y2] = invert(this.matrix, [x + width, y + height, 1])
-    ctx.rect(x1, y1, Math.abs(x2 - x1), Math.abs(y2 - y1))
+  render (ctx: CanvasRenderingContext2D): this {
+    const { x, y, width, height } = this.shape
+    ctx.rect(x, y, width, height)
+    ctx.closePath()
     ctx.stroke()
     return this
   }

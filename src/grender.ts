@@ -1,12 +1,13 @@
 import Events from './events'
 import ShapeSubclass from './shapes/shapeSubclass'
-import Rect from './shapes/rect'
+import Shape from './shape'
 
 export default class GRender extends Events {
   el: HTMLElement
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D | null
   shapes: ShapeSubclass<unknown>[] = []
+
   constructor (el: HTMLElement) {
     super()
     this.el = el
@@ -51,10 +52,19 @@ export default class GRender extends Events {
   render (): this {
     if (this.ctx !== null) {
       this.ctx.clearRect(0, 0, this.width, this.height)
-      this.shapes.forEach(shape => {
-        ;(<CanvasRenderingContext2D> this.ctx).beginPath()
-        shape.render(<CanvasRenderingContext2D> this.ctx, shape.shape)
-      })
+      for (let i = 0; i < this.shapes.length; i++) {
+        const shape = this.shapes[i]
+        const [a, b, c, d, e, f] = shape.matrix
+
+        // 设置Transform
+        this.ctx.setTransform(a, b, c, d, e, f)
+
+        this.ctx.beginPath()
+        shape.render(this.ctx)
+
+        // 恢复Transform
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0)
+      }
     }
     return this
   }

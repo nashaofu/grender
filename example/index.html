@@ -25,13 +25,12 @@
 
         const rect = new GRender.Rect({
           shape: {
-            x: 10,
-            y: 20,
-            width: 80,
-            height: 40
+            x: 0,
+            y: 0,
+            width: 40,
+            height: 80
           }
         })
-        rect.translate([10, 20])
         const circle = new GRender.Circle({
           shape: {
             x: 10,
@@ -41,9 +40,32 @@
         })
         circle.translate([100, 200])
 
+        const rect2 = new GRender.Rect({
+          shape: {
+            x: 0,
+            y: 0,
+            width: 40,
+            height: 80
+          }
+        })
+
+        rect2.rotate(30).translate([100,20])
+
+        const ellipse = new GRender.Ellipse({
+          shape: {
+            x: 100,
+            y: 100,
+            rx: 90,
+            ry: 60
+          }
+        })
+
+
         console.log(rect)
         grender.add(rect)
         grender.add(circle)
+        grender.add(rect2)
+        grender.add(ellipse)
         console.log(grender)
       })
     </script>

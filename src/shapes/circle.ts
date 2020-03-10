@@ -1,4 +1,3 @@
-import { invert } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
 import ShapeSubclass from './shapeSubclass'
 
@@ -21,10 +20,10 @@ export default class Circle extends Shape implements ShapeSubclass<CircleShape> 
     this.shape = opts.shape
   }
 
-  render (ctx: CanvasRenderingContext2D, shape: CircleShape): this {
-    const { x, y, r } = shape
-    const [x1, y1] = invert(this.matrix, [x, y, 1])
-    ctx.arc(x1, y1, r, 0, 2 * Math.PI)
+  render (ctx: CanvasRenderingContext2D): this {
+    const { x, y, r } = this.shape
+    ctx.arc(x, y, r, 0, 2 * Math.PI)
+    ctx.closePath()
     ctx.stroke()
     return this
   }

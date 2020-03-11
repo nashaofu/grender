@@ -19,18 +19,18 @@ export function multiply (m1: number[], m2: number[]): number[] {
  * @param {number[]} m
  */
 export function invert (m: number[]): number[] | null {
-  const aa = m[0]
-  const ac = m[2]
-  const atx = m[4]
-  const ab = m[1]
-  const ad = m[3]
-  const aty = m[5]
+  let det = m[0] * m[3] - m[1] * m[2]
 
-  let det = aa * ad - ab * ac
-  if (!det) {
-    return null
-  }
+  if (!det) return null
+
   det = 1.0 / det
 
-  return [ad * det, -ab * det, -ac * det, aa * det, (ac * aty - ad * atx) * det, (ab * atx - aa * aty) * det]
+  return [
+    m[3] * det,
+    -m[1] * det,
+    -m[2] * det,
+    m[0] * det,
+    (m[2] * m[5] - m[3] * m[4]) * det,
+    (m[1] * m[4] - m[0] * m[5]) * det
+  ]
 }

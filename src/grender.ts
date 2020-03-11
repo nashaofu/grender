@@ -1,6 +1,5 @@
 import Events from './events'
 import ShapeSubclass from './shapes/shapeSubclass'
-import Shape from './shape'
 
 export default class GRender extends Events {
   el: HTMLElement
@@ -29,14 +28,25 @@ export default class GRender extends Events {
   resize (): this {
     this.canvas.width = this.el.offsetWidth
     this.canvas.height = this.el.offsetHeight
-    this.render()
+    this.refresh()
     return this
   }
 
   add<T> (shape: ShapeSubclass<T>): this {
     shape.parent = this
-    this.shapes.push(shape)
-    this.render()
+    let i = this.shapes.length - 1
+
+    // 按z值顺序插入
+    for (; i >= 0; i--) {
+      if (this.shapes[i].z <= shape.z) {
+        i += 1
+        break
+      }
+    }
+
+    this.shapes.splice(i, 0, shape)
+
+    this.refresh()
     return this
   }
 
@@ -45,6 +55,11 @@ export default class GRender extends Events {
     if (index !== -1) {
       this.shapes.splice(index, 1)
     }
+    this.refresh()
+    return this
+  }
+
+  refresh (): this {
     this.render()
     return this
   }
@@ -54,7 +69,7 @@ export default class GRender extends Events {
       this.ctx.clearRect(0, 0, this.width, this.height)
       for (let i = 0; i < this.shapes.length; i++) {
         const shape = this.shapes[i]
-        const [a, b, c, d, e, f] = shape.matrix
+        const [a, b, c, d, e, f] = shape.gm
 
         // 设置Transform
         this.ctx.setTransform(a, b, c, d, e, f)

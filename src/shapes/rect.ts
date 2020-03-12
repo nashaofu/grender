@@ -23,8 +23,12 @@ export default class Rect extends Shape implements ShapeSubclass<RectShape> {
 
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, width, height } = this.shape
+    const { fillStyle } = this.brush
     ctx.rect(x, y, width, height)
     ctx.closePath()
+    if (fillStyle) {
+      ctx.fill()
+    }
     ctx.stroke()
     return this
   }

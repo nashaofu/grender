@@ -24,6 +24,10 @@
         const grender = new GRender.default(document.querySelector('#app'))
 
         const rect = new GRender.Rect({
+          brush: {
+            strokeStyle: 'red',
+            fillStyle: 'yellow'
+          },
           shape: {
             x: 0,
             y: 0,
@@ -37,6 +41,9 @@
             x: 10,
             y: 20,
             r: 40
+          },
+          brush: {
+            strokeStyle: 'blue'
           },
           z: 1
         })

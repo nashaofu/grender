@@ -1,10 +1,11 @@
 import Events from './events'
 import ShapeSubclass from './shapes/shapeSubclass'
+import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
 
 export default class GRender extends Events {
   el: HTMLElement
   canvas: HTMLCanvasElement
-  ctx: CanvasRenderingContext2D | null
+  ctx: CanvasRenderingContext2D
   shapes: ShapeSubclass<unknown>[] = []
 
   constructor (el: HTMLElement) {
@@ -14,7 +15,7 @@ export default class GRender extends Events {
     this.canvas.width = this.el.offsetWidth
     this.canvas.height = this.el.offsetHeight
     this.el.appendChild(this.canvas)
-    this.ctx = this.canvas.getContext('2d')
+    this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d')
   }
 
   get width (): number {
@@ -65,22 +66,27 @@ export default class GRender extends Events {
   }
 
   render (): this {
-    if (this.ctx !== null) {
-      this.ctx.clearRect(0, 0, this.width, this.height)
-      for (let i = 0; i < this.shapes.length; i++) {
-        const shape = this.shapes[i]
-        const [a, b, c, d, e, f] = shape.gm
+    this.ctx.clearRect(0, 0, this.width, this.height)
 
-        // 设置Transform
-        this.ctx.setTransform(a, b, c, d, e, f)
+    this.shapes.forEach(shape => {
+      const [a, b, c, d, e, f] = shape.gm
 
-        this.ctx.beginPath()
-        shape.render(this.ctx)
+      // 设置Transform
+      this.ctx.setTransform(a, b, c, d, e, f)
 
-        // 恢复Transform
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0)
-      }
-    }
+      this.ctx.beginPath()
+      ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
+        const shapeBrush = shape.brush[key]
+        const defaultValue = defaultShapeBrushs[key]
+        this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
+      })
+
+      shape.render(this.ctx)
+
+      // 恢复Transform
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0)
+    })
+
     return this
   }
 }

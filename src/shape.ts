@@ -1,16 +1,21 @@
 import Events from './events'
 import GRender from './grender'
+import { ShapeBrush, defaultShapeBrushs } from './shapeBrush'
 
 export interface ShapeOpts {
   t?: number[]
   s?: number[]
   r?: number
   z?: number
+  brush?: ShapeBrush
 }
 
 export default class Shape extends Events {
   // 渲染层级
   z = 0
+
+  // 画笔
+  brush: ShapeBrush = { }
 
   // 父级元素
   parent?: GRender
@@ -18,7 +23,7 @@ export default class Shape extends Events {
   // shape自身的变换矩阵
   m = [1, 0, 0, 1, 0, 0]
 
-  constructor ({ t, s, r, z }: ShapeOpts) {
+  constructor ({ t, s, r, z, brush }: ShapeOpts) {
     super()
     if (t != null) {
       this.translate(t)
@@ -31,6 +36,9 @@ export default class Shape extends Events {
     }
     if (z != null) {
       this.z = z
+    }
+    if (brush != null) {
+      this.brush = brush
     }
   }
 

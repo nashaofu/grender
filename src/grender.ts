@@ -6,6 +6,7 @@ export default class GRender extends Events {
   el: HTMLElement
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
+  raf?: number
   shapes: ShapeSubclass<unknown>[] = []
 
   constructor (el: HTMLElement) {
@@ -16,6 +17,9 @@ export default class GRender extends Events {
     this.canvas.height = this.el.offsetHeight
     this.el.appendChild(this.canvas)
     this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d')
+    window.addEventListener('mousedown', this.mousedown)
+    window.addEventListener('mousemove', this.mousemove)
+    window.addEventListener('mouseup', this.mousedown)
   }
 
   get width (): number {
@@ -30,6 +34,14 @@ export default class GRender extends Events {
     this.canvas.width = this.el.offsetWidth
     this.canvas.height = this.el.offsetHeight
     this.refresh()
+    return this
+  }
+
+  destroy (): this {
+    this.shapes = []
+    window.removeEventListener('mousedown', this.mousedown)
+    window.removeEventListener('mousemove', this.mousemove)
+    window.removeEventListener('mouseup', this.mousedown)
     return this
   }
 
@@ -66,27 +78,48 @@ export default class GRender extends Events {
   }
 
   render (): this {
-    this.ctx.clearRect(0, 0, this.width, this.height)
+    if (this.raf != null) {
+      cancelAnimationFrame(this.raf)
+    }
 
-    this.shapes.forEach(shape => {
-      const [a, b, c, d, e, f] = shape.gm
+    this.raf = requestAnimationFrame(() => {
+      this.ctx.clearRect(0, 0, this.width, this.height)
 
-      // 设置Transform
-      this.ctx.setTransform(a, b, c, d, e, f)
+      this.shapes.forEach(shape => {
+        const [a, b, c, d, e, f] = shape.gm
 
-      this.ctx.beginPath()
-      ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
-        const shapeBrush = shape.brush[key]
-        const defaultValue = defaultShapeBrushs[key]
-        this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
+        // 设置Transform
+        this.ctx.setTransform(a, b, c, d, e, f)
+
+        this.ctx.beginPath()
+        ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
+          const shapeBrush = shape.brush[key]
+          const defaultValue = defaultShapeBrushs[key]
+          this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
+        })
+
+        shape.render(this.ctx)
+
+        // 恢复Transform
+        this.ctx.setTransform(1, 0, 0, 1, 0, 0)
       })
-
-      shape.render(this.ctx)
-
-      // 恢复Transform
-      this.ctx.setTransform(1, 0, 0, 1, 0, 0)
     })
 
+    return this
+  }
+
+  mousedown (e: Event): this {
+    console.log(e)
+    return this
+  }
+
+  mousemove (e: Event): this {
+    console.log(e)
+    return this
+  }
+
+  mouseup (e: Event): this {
+    console.log(e)
     return this
   }
 }

@@ -3,8 +3,7 @@ module.exports = {
   parser: '@typescript-eslint/parser',
   env: {
     es6: true,
-    node: true,
-    commonjs: true
+    browser: true
   },
   extends: ['standard', 'plugin:@typescript-eslint/recommended'],
   rules: {

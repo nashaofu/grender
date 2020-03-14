@@ -1,5 +1,5 @@
 import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass from './shapeSubclass'
+import ShapeSubclass, { Bounds } from './shapeSubclass'
 
 export interface EllipseShape {
   x: number
@@ -22,8 +22,18 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
     this.shape = opts.shape
   }
 
+  get bounds (): Bounds {
+    return {
+      x: 9,
+      y: 0,
+      width: 0,
+      height: 0
+    }
+  }
+
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, rx, ry } = this.shape
+    const { fillStyle, lineWidth } = this.brush
 
     const k = 0.5522848
     const ox = rx * k // 水平控制点偏移量
@@ -34,7 +44,13 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
     ctx.bezierCurveTo(x + ox, y - ry, x + rx, y - oy, x + rx, y)
     ctx.bezierCurveTo(x + rx, y + oy, x + ox, y + ry, x, y + ry)
     ctx.bezierCurveTo(x - ox, y + ry, x - rx, y + oy, x - rx, y)
-    ctx.stroke()
+    ctx.closePath()
+    if (fillStyle) {
+      ctx.fill()
+    }
+    if (lineWidth !== 0) {
+      ctx.stroke()
+    }
     return this
   }
 }

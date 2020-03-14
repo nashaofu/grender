@@ -26,6 +26,7 @@
         const rect = new GRender.Rect({
           brush: {
             strokeStyle: 'red',
+            lineWidth: 0,
             fillStyle: 'yellow'
           },
           shape: {
@@ -73,12 +74,15 @@
 
         console.log(rect)
 
-        grender.add(rect)
+        // grender.add(rect)
         grender.add(rect2)
-        grender.add(circle)
-        grender.add(ellipse)
+        // grender.add(circle)
+        // grender.add(ellipse)
 
         console.log(grender)
+        window.addEventListener('resize', () => {
+          grender.resize()
+        })
       })
     </script>
   </body>

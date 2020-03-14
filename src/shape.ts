@@ -1,6 +1,6 @@
 import Events from './events'
 import GRender from './grender'
-import { ShapeBrush, defaultShapeBrushs } from './shapeBrush'
+import { ShapeBrush } from './shapeBrush'
 
 export interface ShapeOpts {
   t?: number[]
@@ -15,7 +15,7 @@ export default class Shape extends Events {
   z = 0
 
   // 画笔
-  brush: ShapeBrush = { }
+  brush: ShapeBrush = {}
 
   // 父级元素
   parent?: GRender
@@ -73,6 +73,32 @@ export default class Shape extends Events {
    */
   get gm (): number[] {
     return this.m
+  }
+
+  /**
+   * 当前全局变换位置
+   */
+  get gt (): number[] {
+    const [, , , , e, f] = this.gm
+
+    return [e, f]
+  }
+
+  /**
+   * 当前全局缩放比例
+   */
+  get gs (): number[] {
+    const [a, b, c, d] = this.gm
+    return [Math.sqrt(Math.pow(a, 2) + Math.pow(b, 2)), Math.sqrt(Math.pow(c, 2) + Math.pow(d, 2))]
+  }
+
+  /**
+   * 当前全局旋转角度
+   */
+  get gr (): number {
+    const [a, b] = this.gm
+
+    return -(Math.atan2(b, a) / Math.PI) * 180
   }
 
   /**

@@ -1,5 +1,5 @@
 import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass from './shapeSubclass'
+import ShapeSubclass, { Bounds } from './shapeSubclass'
 
 export interface CircleShape {
   x: number
@@ -20,11 +20,26 @@ export default class Circle extends Shape implements ShapeSubclass<CircleShape> 
     this.shape = opts.shape
   }
 
+  get bounds (): Bounds {
+    return {
+      x: 9,
+      y: 0,
+      width: 0,
+      height: 0
+    }
+  }
+
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, r } = this.shape
+    const { fillStyle, lineWidth } = this.brush
     ctx.arc(x, y, r, 0, 2 * Math.PI)
     ctx.closePath()
-    ctx.stroke()
+    if (fillStyle) {
+      ctx.fill()
+    }
+    if (lineWidth !== 0) {
+      ctx.stroke()
+    }
     return this
   }
 }

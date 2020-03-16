@@ -23,12 +23,7 @@
       requirejs(['../lib/index.js'], function(GRender) {
         const grender = new GRender.default(document.querySelector('#app'))
 
-        const rect = new GRender.Rect({
-          brush: {
-            strokeStyle: 'red',
-            lineWidth: 0,
-            fillStyle: 'yellow'
-          },
+        const rect1 = new GRender.Rect({
           shape: {
             x: 0,
             y: 0,
@@ -37,32 +32,33 @@
           },
           z: 2
         })
-        const circle = new GRender.Circle({
+        const circle1 = new GRender.Circle({
           shape: {
             x: 10,
             y: 20,
             r: 40
           },
-          brush: {
-            strokeStyle: 'blue'
-          },
           z: 1
         })
-        circle.translate([100, 200])
+        circle1.translate([100, 200])
 
         const rect2 = new GRender.Rect({
           shape: {
             x: 0,
-            y: 0,
+            y: 50,
             width: 40,
             height: 80
           },
           z: 1
         })
 
-        rect2.rotate(30).translate([100, 20])
+        rect1.rotate(30).translate([100, 20])
+        rect2
+          .rotate(30)
+          .translate([100, 20])
+          .scale([2, 2])
 
-        const ellipse = new GRender.Ellipse({
+        const ellipse1 = new GRender.Ellipse({
           shape: {
             x: 100,
             y: 100,
@@ -72,12 +68,25 @@
           z: 3
         })
 
-        console.log(rect)
+        ellipse1
+          .translate([100, 20])
 
-        // grender.add(rect)
+        console.log(rect1)
+
+        grender.add(rect1)
         grender.add(rect2)
-        // grender.add(circle)
-        // grender.add(ellipse)
+        grender.add(circle1)
+        grender.add(ellipse1)
+
+        rect1.on('mousedown', () => {
+          rect1.brush.fillStyle = 'red'
+          grender.refresh()
+        })
+
+        rect1.on('mouseup', () => {
+          rect1.brush.fillStyle = 'rgba(0,0,0,0)'
+          grender.refresh()
+        })
 
         console.log(grender)
         window.addEventListener('resize', () => {

@@ -15,6 +15,15 @@ export function multiply (m1: number[], m2: number[]): number[] {
 }
 
 /**
+ * 点经过矩阵变换后新的位置
+ * @param m
+ * @param point
+ */
+export function transform (point: number[], m: number[]): number[] {
+  return [m[0] * point[0] + m[2] * point[1] + m[4], m[1] * point[0] + m[3] * point[1] + m[5]]
+}
+
+/**
  * 求逆矩阵
  * @param {number[]} m
  */

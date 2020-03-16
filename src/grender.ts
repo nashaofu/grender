@@ -19,7 +19,7 @@ export default class GRender extends Events {
     this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d')
     window.addEventListener('mousedown', this.mousedown)
     window.addEventListener('mousemove', this.mousemove)
-    window.addEventListener('mouseup', this.mousedown)
+    window.addEventListener('mouseup', this.mouseup)
   }
 
   get width (): number {
@@ -41,7 +41,7 @@ export default class GRender extends Events {
     this.shapes = []
     window.removeEventListener('mousedown', this.mousedown)
     window.removeEventListener('mousemove', this.mousemove)
-    window.removeEventListener('mouseup', this.mousedown)
+    window.removeEventListener('mouseup', this.mouseup)
     return this
   }
 
@@ -108,18 +108,33 @@ export default class GRender extends Events {
     return this
   }
 
-  mousedown (e: Event): this {
-    console.log(e)
+  mousedown = (e: Event): this => {
+    this.shapes.reverse().forEach(shape => {
+      const { x, y, width, height } = shape.bounds
+      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+        shape.emit('mousedown', e)
+      }
+    })
     return this
   }
 
-  mousemove (e: Event): this {
-    console.log(e)
+  mousemove = (e: Event): this => {
+    this.shapes.reverse().forEach(shape => {
+      const { x, y, width, height } = shape.bounds
+      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+        shape.emit('mousemove', e)
+      }
+    })
     return this
   }
 
-  mouseup (e: Event): this {
-    console.log(e)
+  mouseup = (e: Event): this => {
+    this.shapes.reverse().forEach(shape => {
+      const { x, y, width, height } = shape.bounds
+      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+        shape.emit('mouseup', e)
+      }
+    })
     return this
   }
 }

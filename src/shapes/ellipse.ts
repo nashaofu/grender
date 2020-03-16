@@ -1,5 +1,6 @@
 import Shape, { ShapeOpts } from '../shape'
 import ShapeSubclass, { Bounds } from './shapeSubclass'
+import { transform } from '../matrix'
 
 export interface EllipseShape {
   x: number
@@ -23,11 +24,22 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
   }
 
   get bounds (): Bounds {
+    const { x, y, rx, ry } = this.shape
+    const [x1, y1] = transform([x - rx, y - ry], this.m)
+    const [x2, y2] = transform([x + rx, y - ry], this.m)
+    const [x3, y3] = transform([x + rx, y + ry], this.m)
+    const [x4, y4] = transform([x - rx, y + ry], this.m)
+
+    const bX = Math.min(x1, x2, x3, x4)
+    const bY = Math.min(y1, y2, y3, y4)
+    const bWidth = Math.max(x1, x2, x3, x4) - bX
+    const bHeight = Math.max(y1, y2, y3, y4) - bY
+
     return {
-      x: 9,
-      y: 0,
-      width: 0,
-      height: 0
+      x: bX,
+      y: bY,
+      width: bWidth,
+      height: bHeight
     }
   }
 

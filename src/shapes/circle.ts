@@ -34,7 +34,11 @@ export default class Circle extends Shape implements ShapeSubclass<CircleShape> 
       r += lineWidth / 2
     }
 
-    // 判断是否在圆内
+    /**
+     * 判断是否在圆内
+     * 圆形曲线方程为(r为圆形半径)
+     * x^2 + y^2 = r^2
+     */
     return Math.sqrt((px - x) ** 2 + (py - y) ** 2) <= r
   }
 

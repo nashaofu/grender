@@ -39,7 +39,11 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
       ry += lw
     }
 
-    // 判断是否在椭圆内
+    /**
+     * 判断是否在椭圆内
+     * 椭圆曲线方程为(cx,cy为椭圆中心点)
+     * (x-cx)^2/a^2 + (y-cy)^2/b^2 = 1
+     */
     return (px - x) ** 2 / rx ** 2 + (py - y) ** 2 / ry ** 2 <= 1
   }
 

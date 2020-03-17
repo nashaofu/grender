@@ -1,6 +1,6 @@
-import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass, { Bounds } from './shapeSubclass'
 import { transform } from '../matrix'
+import Shape, { ShapeOpts } from '../shape'
+import ShapeSubclass from './shapeSubclass'
 
 export interface EllipseShape {
   x: number
@@ -23,24 +23,24 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
     this.shape = opts.shape
   }
 
-  get bounds (): Bounds {
-    const { x, y, rx, ry } = this.shape
-    const [x1, y1] = transform([x - rx, y - ry], this.m)
-    const [x2, y2] = transform([x + rx, y - ry], this.m)
-    const [x3, y3] = transform([x + rx, y + ry], this.m)
-    const [x4, y4] = transform([x - rx, y + ry], this.m)
+  contains (px: number, py: number): boolean {
+    let { x, y, rx, ry } = this.shape
+    const { lineWidth } = this.brush
 
-    const bX = Math.min(x1, x2, x3, x4)
-    const bY = Math.min(y1, y2, y3, y4)
-    const bWidth = Math.max(x1, x2, x3, x4) - bX
-    const bHeight = Math.max(y1, y2, y3, y4) - bY
-
-    return {
-      x: bX,
-      y: bY,
-      width: bWidth,
-      height: bHeight
+    if (this.IM) {
+      const p = transform([px, py], this.IM)
+      px = p[0]
+      py = p[1]
     }
+
+    if (lineWidth > 0) {
+      const lw = lineWidth / 2
+      rx += lw
+      ry += lw
+    }
+
+    // 判断是否在椭圆内
+    return (px - x) ** 2 / rx ** 2 + (py - y) ** 2 / ry ** 2 <= 1
   }
 
   render (ctx: CanvasRenderingContext2D): this {

@@ -86,7 +86,7 @@ export default class GRender extends Events {
       this.ctx.clearRect(0, 0, this.width, this.height)
 
       this.shapes.forEach(shape => {
-        const [a, b, c, d, e, f] = shape.gm
+        const [a, b, c, d, e, f] = shape.GM
 
         // 设置Transform
         this.ctx.setTransform(a, b, c, d, e, f)
@@ -110,8 +110,7 @@ export default class GRender extends Events {
 
   mousedown = (e: Event): this => {
     this.shapes.reverse().forEach(shape => {
-      const { x, y, width, height } = shape.bounds
-      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+      if (shape.contains(e.x, e.y)) {
         shape.emit('mousedown', e)
       }
     })
@@ -120,8 +119,7 @@ export default class GRender extends Events {
 
   mousemove = (e: Event): this => {
     this.shapes.reverse().forEach(shape => {
-      const { x, y, width, height } = shape.bounds
-      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+      if (shape.contains(e.x, e.y)) {
         shape.emit('mousemove', e)
       }
     })
@@ -130,8 +128,7 @@ export default class GRender extends Events {
 
   mouseup = (e: Event): this => {
     this.shapes.reverse().forEach(shape => {
-      const { x, y, width, height } = shape.bounds
-      if (e.x >= x && e.x <= x + width && e.y >= y && e.y <= y + height) {
+      if (shape.contains(e.x, e.y)) {
         shape.emit('mouseup', e)
       }
     })

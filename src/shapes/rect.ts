@@ -1,6 +1,6 @@
-import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass, { Bounds } from './shapeSubclass'
 import { transform } from '../matrix'
+import Shape, { ShapeOpts } from '../shape'
+import ShapeSubclass from './shapeSubclass'
 
 export interface RectShape {
   x: number
@@ -22,24 +22,26 @@ export default class Rect extends Shape implements ShapeSubclass<RectShape> {
     this.shape = opts.shape
   }
 
-  get bounds (): Bounds {
-    const { x, y, width, height } = this.shape
-    const [x1, y1] = transform([x, y], this.m)
-    const [x2, y2] = transform([x + width, y], this.m)
-    const [x3, y3] = transform([x + width, y + height], this.m)
-    const [x4, y4] = transform([x, y + height], this.m)
+  contains (px: number, py: number): boolean {
+    let { x, y, width, height } = this.shape
+    const { lineWidth } = this.brush
 
-    const bX = Math.min(x1, x2, x3, x4)
-    const bY = Math.min(y1, y2, y3, y4)
-    const bWidth = Math.max(x1, x2, x3, x4) - bX
-    const bHeight = Math.max(y1, y2, y3, y4) - bY
-
-    return {
-      x: bX,
-      y: bY,
-      width: bWidth,
-      height: bHeight
+    if (this.IM) {
+      const p = transform([px, py], this.IM)
+      px = p[0]
+      py = p[1]
     }
+
+    if (lineWidth > 0) {
+      const lw = lineWidth / 2
+      x -= lw
+      y -= lw
+      width += lineWidth
+      height += lineWidth
+    }
+
+    // 判断是否在矩形内
+    return x <= px && x + width >= px && y <= py && y + height >= py
   }
 
   render (ctx: CanvasRenderingContext2D): this {

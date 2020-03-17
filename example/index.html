@@ -40,7 +40,7 @@
           },
           z: 1
         })
-        circle1.translate([100, 200])
+        circle1.translate(100, 200)
 
         const rect2 = new GRender.Rect({
           shape: {
@@ -52,11 +52,11 @@
           z: 1
         })
 
-        rect1.rotate(30).translate([100, 20])
+        rect1.rotate(30).translate(100, 20)
         rect2
           .rotate(30)
-          .translate([100, 20])
-          .scale([2, 2])
+          .translate(200, 50)
+          .scale(2, 1)
 
         const ellipse1 = new GRender.Ellipse({
           shape: {
@@ -65,11 +65,13 @@
             rx: 90,
             ry: 60
           },
+          brush: {
+            lineWidth: 20
+          },
           z: 3
         })
 
-        ellipse1
-          .translate([100, 20])
+        // ellipse1.translate(100, 20)
 
         console.log(rect1)
 
@@ -78,14 +80,16 @@
         grender.add(circle1)
         grender.add(ellipse1)
 
-        rect1.on('mousedown', () => {
-          rect1.brush.fillStyle = 'red'
-          grender.refresh()
-        })
+        grender.shapes.forEach(shape => {
+          shape.on('mousedown', () => {
+            shape.brush.fillStyle = 'red'
+            grender.refresh()
+          })
 
-        rect1.on('mouseup', () => {
-          rect1.brush.fillStyle = 'rgba(0,0,0,0)'
-          grender.refresh()
+          shape.on('mouseup', () => {
+            shape.brush.fillStyle = 'rgba(0,0,0,0)'
+            grender.refresh()
+          })
         })
 
         console.log(grender)

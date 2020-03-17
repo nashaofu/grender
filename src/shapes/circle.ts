@@ -1,6 +1,6 @@
-import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass, { Bounds } from './shapeSubclass'
 import { transform } from '../matrix'
+import Shape, { ShapeOpts } from '../shape'
+import ShapeSubclass from './shapeSubclass'
 
 export interface CircleShape {
   x: number
@@ -21,24 +21,21 @@ export default class Circle extends Shape implements ShapeSubclass<CircleShape> 
     this.shape = opts.shape
   }
 
-  get bounds (): Bounds {
-    const { x, y, r } = this.shape
-    const [x1, y1] = transform([x - r, y - r], this.m)
-    const [x2, y2] = transform([x + r, y - r], this.m)
-    const [x3, y3] = transform([x + r, y + r], this.m)
-    const [x4, y4] = transform([x - r, y + r], this.m)
-
-    const bX = Math.min(x1, x2, x3, x4)
-    const bY = Math.min(y1, y2, y3, y4)
-    const bWidth = Math.max(x1, x2, x3, x4) - bX
-    const bHeight = Math.max(y1, y2, y3, y4) - bY
-
-    return {
-      x: bX,
-      y: bY,
-      width: bWidth,
-      height: bHeight
+  contains (px: number, py: number): boolean {
+    let { x, y, r } = this.shape
+    const { lineWidth } = this.brush
+    if (this.IM) {
+      const p = transform([px, py], this.IM)
+      px = p[0]
+      py = p[1]
     }
+
+    if (lineWidth > 0) {
+      r += lineWidth / 2
+    }
+
+    // 判断是否在圆内
+    return Math.sqrt((px - x) ** 2 + (py - y) ** 2) <= r
   }
 
   render (ctx: CanvasRenderingContext2D): this {

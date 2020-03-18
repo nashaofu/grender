@@ -17,9 +17,13 @@ export default class GRender extends Events {
     this.canvas.height = this.el.offsetHeight
     this.el.appendChild(this.canvas)
     this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d')
-    window.addEventListener('mousedown', this.mousedown)
-    window.addEventListener('mousemove', this.mousemove)
-    window.addEventListener('mouseup', this.mouseup)
+
+    this.canvas.addEventListener('click', this.onClick)
+    this.canvas.addEventListener('dblclick', this.onDblclick)
+    this.canvas.addEventListener('wheel', this.onWheel)
+    this.canvas.addEventListener('mousedown', this.onMousedown)
+    window.addEventListener('mousemove', this.onMousemove)
+    window.addEventListener('mouseup', this.onMouseup)
   }
 
   get width (): number {
@@ -39,9 +43,11 @@ export default class GRender extends Events {
 
   destroy (): this {
     this.shapes = []
-    window.removeEventListener('mousedown', this.mousedown)
-    window.removeEventListener('mousemove', this.mousemove)
-    window.removeEventListener('mouseup', this.mouseup)
+    this.canvas.removeEventListener('click', this.onClick)
+    this.canvas.removeEventListener('wheel', this.onWheel)
+    this.canvas.removeEventListener('mousedown', this.onMousedown)
+    window.removeEventListener('mousemove', this.onMousemove)
+    window.removeEventListener('mouseup', this.onMouseup)
     return this
   }
 
@@ -108,30 +114,58 @@ export default class GRender extends Events {
     return this
   }
 
-  mousedown = (e: Event): this => {
-    this.shapes.reverse().forEach(shape => {
-      if (shape.contains(e.x, e.y)) {
+  onClick = (e: MouseEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
+        shape.emit('click', e)
+      }
+    })
+    this.emit('click', e)
+    return this
+  }
+
+  onDblclick = (e: MouseEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
+        shape.emit('dblclick', e)
+      }
+    })
+    this.emit('dblclick', e)
+    return this
+  }
+
+  onWheel = (e: WheelEvent): this => {
+    this.emit('wheel', e)
+    return this
+  }
+
+  onMousedown = (e: MouseEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
         shape.emit('mousedown', e)
       }
     })
+    this.emit('mousedown', e)
     return this
   }
 
-  mousemove = (e: Event): this => {
-    this.shapes.reverse().forEach(shape => {
-      if (shape.contains(e.x, e.y)) {
+  onMousemove = (e: MouseEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
         shape.emit('mousemove', e)
       }
     })
+    this.emit('mousemove', e)
     return this
   }
 
-  mouseup = (e: Event): this => {
-    this.shapes.reverse().forEach(shape => {
-      if (shape.contains(e.x, e.y)) {
+  onMouseup = (e: MouseEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
         shape.emit('mouseup', e)
       }
     })
+    this.emit('mouseup', e)
     return this
   }
 }

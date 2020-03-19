@@ -32,7 +32,7 @@ export default class Rect extends Shape implements ShapeSubclass<RectShape> {
       py = p[1]
     }
 
-    if (lineWidth > 0) {
+    if (typeof lineWidth === 'number') {
       const lw = lineWidth / 2
       x -= lw
       y -= lw

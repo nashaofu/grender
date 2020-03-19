@@ -30,7 +30,7 @@ export default class Circle extends Shape implements ShapeSubclass<CircleShape> 
       py = p[1]
     }
 
-    if (lineWidth > 0) {
+    if (typeof lineWidth === 'number') {
       r += lineWidth / 2
     }
 

@@ -1,7 +1,7 @@
 import Events from './events'
 import GRender from './grender'
-import { ShapeBrush } from './shapeBrush'
 import { invert } from './matrix'
+import { ShapeBrush } from './shapeBrush'
 
 export interface ShapeOpts {
   t?: number[]
@@ -12,6 +12,11 @@ export interface ShapeOpts {
 }
 
 export default class Shape extends Events {
+  static uid = 0
+
+  // shape的uid
+  uid: number
+
   // 渲染层级
   z = 0
 
@@ -28,6 +33,7 @@ export default class Shape extends Events {
 
   constructor ({ t, s, r, z, brush }: ShapeOpts) {
     super()
+    this.uid = Shape.uid++
     if (Array.isArray(t)) {
       this.translate(t[0], t[1])
     }

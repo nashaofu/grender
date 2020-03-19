@@ -13,16 +13,11 @@
         width: 100%;
         height: 100%;
       }
-      #app {
-        border-top: 1px solid #000;
-      }
     </style>
   </head>
   <body>
     <noscript><strong>很抱歉，没有JavaScript，网站不能正常工作。请启用JavaScript。</strong></noscript>
-    <div style="padding-top: 50px; height: 100%;">
-      <div id="app"></div>
-    </div>
+    <div id="app"></div>
     <script src="./require.js"></script>
     <script>
       requirejs(['../lib/index.js'], function(GRender) {
@@ -86,9 +81,18 @@
         grender.add(ellipse1)
 
         grender.shapes.forEach(shape => {
-          shape.on('mousedown', e => {
-            console.log(e)
+          shape.on('dragging', e => {
             shape.brush.fillStyle = 'red'
+            shape.translate(e.x, e.y)
+            grender.refresh()
+          })
+
+          shape.on('mouseover', e => {
+            shape.brush.fillStyle = 'red'
+            grender.refresh()
+          })
+          shape.on('mouseout', e => {
+            shape.brush.fillStyle = 'rgba(0,0,0,0)'
             grender.refresh()
           })
 

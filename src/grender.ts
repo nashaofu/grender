@@ -1,6 +1,8 @@
 import Events from './events'
 import ShapeSubclass from './shapes/shapeSubclass'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
+import drag from './drag'
+import hover from './hover'
 
 export default class GRender extends Events {
   el: HTMLElement
@@ -22,8 +24,8 @@ export default class GRender extends Events {
     this.canvas.addEventListener('dblclick', this.onDblclick)
     this.canvas.addEventListener('wheel', this.onWheel)
     this.canvas.addEventListener('mousedown', this.onMousedown)
-    window.addEventListener('mousemove', this.onMousemove)
-    window.addEventListener('mouseup', this.onMouseup)
+    this.canvas.addEventListener('mousemove', this.onMousemove)
+    this.canvas.addEventListener('mouseup', this.onMouseup)
   }
 
   get width (): number {
@@ -42,12 +44,15 @@ export default class GRender extends Events {
   }
 
   destroy (): this {
+    // 清理事件监听
+    this.shapes.forEach(shape => shape.off())
+    this.off()
     this.shapes = []
     this.canvas.removeEventListener('click', this.onClick)
     this.canvas.removeEventListener('wheel', this.onWheel)
     this.canvas.removeEventListener('mousedown', this.onMousedown)
-    window.removeEventListener('mousemove', this.onMousemove)
-    window.removeEventListener('mouseup', this.onMouseup)
+    this.canvas.removeEventListener('mousemove', this.onMousemove)
+    this.canvas.removeEventListener('mouseup', this.onMouseup)
     return this
   }
 
@@ -64,6 +69,9 @@ export default class GRender extends Events {
     }
 
     this.shapes.splice(i, 0, shape)
+
+    drag(shape)
+    hover(shape)
 
     this.refresh()
     return this
@@ -135,6 +143,11 @@ export default class GRender extends Events {
   }
 
   onWheel = (e: WheelEvent): this => {
+    this.shapes.forEach(shape => {
+      if (shape.contains(e.offsetX, e.offsetY)) {
+        shape.emit('wheel', e)
+      }
+    })
     this.emit('wheel', e)
     return this
   }

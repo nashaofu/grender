@@ -33,7 +33,7 @@ export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape
       py = p[1]
     }
 
-    if (lineWidth > 0) {
+    if (typeof lineWidth === 'number') {
       const lw = lineWidth / 2
       rx += lw
       ry += lw

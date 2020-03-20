@@ -1,8 +1,8 @@
 import Events from './events'
 import ShapeSubclass from './shapes/shapeSubclass'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
-import drag from './drag'
-import hover from './hover'
+import { addDrag, removeDrag } from './drag'
+import { addMouseOverAndOut, removeMouseOverAndOut } from './mouseOverAndOut'
 
 export default class GRender extends Events {
   el: HTMLElement
@@ -43,9 +43,26 @@ export default class GRender extends Events {
     return this
   }
 
+  clear (): this {
+    this.shapes.forEach(shape => {
+      shape.off()
+      removeDrag(shape)
+      removeMouseOverAndOut(shape)
+    })
+    this.shapes = []
+
+    this.refresh()
+
+    return this
+  }
+
   destroy (): this {
     // 清理事件监听
-    this.shapes.forEach(shape => shape.off())
+    this.shapes.forEach(shape => {
+      shape.off()
+      removeDrag(shape)
+      removeMouseOverAndOut(shape)
+    })
     this.off()
     this.shapes = []
     this.canvas.removeEventListener('click', this.onClick)
@@ -53,6 +70,9 @@ export default class GRender extends Events {
     this.canvas.removeEventListener('mousedown', this.onMousedown)
     this.canvas.removeEventListener('mousemove', this.onMousemove)
     this.canvas.removeEventListener('mouseup', this.onMouseup)
+
+    this.el.removeChild(this.canvas)
+
     return this
   }
 
@@ -70,8 +90,8 @@ export default class GRender extends Events {
 
     this.shapes.splice(i, 0, shape)
 
-    drag(shape)
-    hover(shape)
+    addDrag(shape)
+    addMouseOverAndOut(shape)
 
     this.refresh()
     return this
@@ -82,6 +102,10 @@ export default class GRender extends Events {
     if (index !== -1) {
       this.shapes.splice(index, 1)
     }
+
+    removeDrag(shape)
+    removeMouseOverAndOut(shape)
+
     this.refresh()
     return this
   }

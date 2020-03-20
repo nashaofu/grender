@@ -11,7 +11,7 @@ export interface ShapeOpts {
   brush?: ShapeBrush
 }
 
-export default class Shape extends Events {
+export default abstract class Shape extends Events {
   static uid = 0
 
   // shape的uid

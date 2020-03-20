@@ -1,23 +1,28 @@
 const EVENTS = Symbol('Events')
 
 export interface Handler {
-  once: boolean
-  handler: (...args: unknown[]) => unknown
+  // eslint-disable-next-line @typescript-eslint/no-explicit-any
+  (...args: any[]): any
 }
 
-export interface Handlers {
-  [key: string]: Handler[]
+export interface EventsHandler {
+  once: boolean
+  handler: Handler
+}
+
+export interface EventsHandlers {
+  [key: string]: EventsHandler[]
 }
 
 export default class Events {
-  readonly [EVENTS]: Handlers = {}
+  readonly [EVENTS]: EventsHandlers = {}
 
   /**
    * 绑定事件
    * @param event
    * @param handler
    */
-  on (event: string, handler: (...args: unknown[]) => unknown): this | never {
+  on (event: string, handler: Handler): this | never {
     if (!this[EVENTS][event]) {
       this[EVENTS][event] = []
     }
@@ -38,7 +43,7 @@ export default class Events {
    * @param event
    * @param handler
    */
-  once (event: string, handler: (...args: unknown[]) => unknown): this | never {
+  once (event: string, handler: Handler): this | never {
     if (!this[EVENTS][event]) {
       this[EVENTS][event] = []
     }
@@ -61,7 +66,7 @@ export default class Events {
    * @param event
    * @param handler
    */
-  off (event?: string, handler?: (...args: unknown[]) => unknown): this | never {
+  off (event?: string, handler?: Handler): this | never {
     if (!event) {
       Object.keys(this[EVENTS]).forEach(key => {
         delete this[EVENTS][key]
@@ -73,7 +78,7 @@ export default class Events {
       if (!handler) {
         this[EVENTS][event] = []
       } else {
-        const index = handlers.findIndex((h: Handler) => h.handler === handler)
+        const index = handlers.findIndex((h: EventsHandler) => h.handler === handler)
         if (index > -1) {
           handlers.splice(index, 1)
         }
@@ -90,7 +95,7 @@ export default class Events {
   emit (event: string, ...args: unknown[]): this {
     const handlers = this[EVENTS][event] || []
 
-    handlers.forEach((h: Handler) => {
+    handlers.forEach((h: EventsHandler) => {
       if (h.once) {
         this.off(event, h.handler)
       }

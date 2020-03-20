@@ -1,5 +1,10 @@
 import ShapeSubclass from './shapes/shapeSubclass'
 
+interface EventHandler {
+  shape: ShapeSubclass<unknown>
+  handler(e: MouseEvent): void
+}
+
 interface DragArgs {
   ox: number
   oy: number
@@ -7,25 +12,22 @@ interface DragArgs {
   y: number
 }
 
-interface DragEventHandler {
-  (e: MouseEvent): void
-}
-
-const mousemoveHandlers: DragEventHandler[] = []
-const mouseupHandlers: DragEventHandler[] = []
+const MousemoveEventHandlers: EventHandler[] = []
+const MouseupEventHandlers: EventHandler[] = []
 
 window.addEventListener('mousemove', (e: MouseEvent) => {
-  mousemoveHandlers.forEach(fn => fn(e))
+  MousemoveEventHandlers.forEach(({ handler }) => handler(e))
 })
 
 window.addEventListener('mouseup', (e: MouseEvent) => {
-  mouseupHandlers.forEach(fn => fn(e))
+  MouseupEventHandlers.forEach(({ handler }) => handler(e))
 })
 
-export default function drag<T> (shape: ShapeSubclass<T>): () => void {
+export function addDrag<T> (shape: ShapeSubclass<T>): void {
   let dragArgs: DragArgs | null = null
 
   shape.on('mousedown', e => {
+    if (!shape.parent) return
     const [x, y] = shape.T
     const { clientX, clientY } = <MouseEvent>e
     dragArgs = {
@@ -37,31 +39,35 @@ export default function drag<T> (shape: ShapeSubclass<T>): () => void {
     shape.emit('dragstart', dragArgs, e)
   })
 
-  const mousemove = (e: MouseEvent): void => {
-    if (!dragArgs) return
-    dragArgs.x = e.x - dragArgs.ox
-    dragArgs.y = e.y - dragArgs.oy
-    shape.emit('dragging', dragArgs, e)
-  }
-
-  const mouseup = (e: MouseEvent): void => {
-    if (!dragArgs) return
-    dragArgs.x = e.x - dragArgs.ox
-    dragArgs.y = e.y - dragArgs.oy
-    shape.emit('dragend', dragArgs, e)
-    dragArgs = null
-  }
-
-  mousemoveHandlers.push(mousemove)
-  mouseupHandlers.push(mouseup)
-  return (): void => {
-    const moveIndex = mousemoveHandlers.findIndex(fn => fn === mousemove)
-    const upIndex = mouseupHandlers.findIndex(fn => fn === mouseup)
-    if (moveIndex !== -1) {
-      mousemoveHandlers.splice(moveIndex, 1)
+  MousemoveEventHandlers.push({
+    shape,
+    handler: (e: MouseEvent): void => {
+      if (!shape.parent || !dragArgs) return
+      dragArgs.x = e.x - dragArgs.ox
+      dragArgs.y = e.y - dragArgs.oy
+      shape.emit('dragging', dragArgs, e)
     }
-    if (upIndex !== -1) {
-      mouseupHandlers.splice(upIndex, 1)
+  })
+
+  MouseupEventHandlers.push({
+    shape,
+    handler: (e: MouseEvent): void => {
+      if (!shape.parent || !dragArgs) return
+      dragArgs.x = e.x - dragArgs.ox
+      dragArgs.y = e.y - dragArgs.oy
+      shape.emit('dragend', dragArgs, e)
+      dragArgs = null
     }
+  })
+}
+
+export function removeDrag<T> (shape: ShapeSubclass<T>): void {
+  const mousemoveIndex = MousemoveEventHandlers.findIndex(handler => handler.shape === shape)
+  const mouseupIndex = MouseupEventHandlers.findIndex(handler => handler.shape === shape)
+  if (mousemoveIndex !== -1) {
+    MousemoveEventHandlers.splice(mousemoveIndex, 1)
+  }
+  if (mouseupIndex !== -1) {
+    MouseupEventHandlers.splice(mouseupIndex, 1)
   }
 }

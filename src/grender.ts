@@ -1,8 +1,8 @@
 import Events from './events'
+import { addDrag, removeDrag } from './drag'
 import ShapeSubclass from './shapes/shapeSubclass'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
-import { addDrag, removeDrag } from './drag'
-import { addMouseOverAndOut, removeMouseOverAndOut } from './mouseOverAndOut'
+import { addMouseOverOut, removeMouseOverOut } from './mouseOverOut'
 
 export default class GRender extends Events {
   el: HTMLElement
@@ -47,7 +47,7 @@ export default class GRender extends Events {
     this.shapes.forEach(shape => {
       shape.off()
       removeDrag(shape)
-      removeMouseOverAndOut(shape)
+      removeMouseOverOut(shape)
     })
     this.shapes = []
 
@@ -61,7 +61,7 @@ export default class GRender extends Events {
     this.shapes.forEach(shape => {
       shape.off()
       removeDrag(shape)
-      removeMouseOverAndOut(shape)
+      removeMouseOverOut(shape)
     })
     this.off()
     this.shapes = []
@@ -91,7 +91,7 @@ export default class GRender extends Events {
     this.shapes.splice(i, 0, shape)
 
     addDrag(shape)
-    addMouseOverAndOut(shape)
+    addMouseOverOut(shape)
 
     this.refresh()
     return this
@@ -104,7 +104,7 @@ export default class GRender extends Events {
     }
 
     removeDrag(shape)
-    removeMouseOverAndOut(shape)
+    removeMouseOverOut(shape)
 
     this.refresh()
     return this

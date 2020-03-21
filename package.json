@@ -31,6 +31,9 @@
     "url": "https://github.com/nashaofu/grender/issues"
   },
   "homepage": "https://github.com/nashaofu/grender#readme",
+  "publishConfig": {
+    "registry": "https://registry.npmjs.org/"
+  },
   "devDependencies": {
     "@typescript-eslint/eslint-plugin": "^2.22.0",
     "@typescript-eslint/parser": "^2.22.0",

@@ -1,9 +1,9 @@
 <!DOCTYPE html>
-<html lang="en">
+<html>
   <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
-    <title>grender</title>
+    <title>GRender</title>
     <style>
       html,
       body,
@@ -16,11 +16,9 @@
     </style>
   </head>
   <body>
-    <noscript><strong>很抱歉，没有JavaScript，网站不能正常工作。请启用JavaScript。</strong></noscript>
     <div id="app"></div>
     <script src="../dist/grender.js"></script>
     <script>
-      console.log(window.GRender)
       const grender = new GRender.default(document.querySelector('#app'))
 
       const rect1 = new GRender.Rect({

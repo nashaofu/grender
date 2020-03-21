@@ -1,6 +1,5 @@
 import { transform } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass from './shapeSubclass'
 
 export interface CircleShape {
   x: number
@@ -12,7 +11,7 @@ export interface CircleOpts extends ShapeOpts {
   shape: CircleShape
 }
 
-export default class Circle extends Shape implements ShapeSubclass<CircleShape> {
+export default class Circle extends Shape<CircleShape> {
   name = 'Circle'
   shape: CircleShape
 

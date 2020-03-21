@@ -1,12 +1,20 @@
 {
   "name": "grender",
-  "version": "0.0.1",
+  "version": "0.0.2",
   "description": "A lightweight canvas library for 2D.",
+  "types": "lib/index.d.ts",
   "main": "lib/index.js",
+  "files": [
+    "lib",
+    "dist"
+  ],
   "scripts": {
-    "dev": "tsc --project tsconfig.dev.json --watch",
-    "build": "npm run lint && rimraf ./lib && tsc",
-    "lint": "eslint src --ext .ts --fix"
+    "prepublishOnly": "npm run build",
+    "dev": "rollup --config rollup.config.js --watch",
+    "build": "npm run lint && npm run clean && npm run compile",
+    "compile": "tsc && rollup --config rollup.config.js --environment MODE:production",
+    "lint": "eslint src --ext .ts --fix",
+    "clean": "rimraf lib dist"
   },
   "repository": {
     "type": "git",
@@ -33,6 +41,9 @@
     "eslint-plugin-promise": "^4.2.1",
     "eslint-plugin-standard": "^4.0.1",
     "rimraf": "^3.0.2",
+    "rollup": "^2.1.0",
+    "rollup-plugin-terser": "^5.3.0",
+    "rollup-plugin-typescript2": "^0.26.0",
     "typescript": "^3.8.3"
   }
 }

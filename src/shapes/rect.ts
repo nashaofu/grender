@@ -1,6 +1,5 @@
 import { transform } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass from './shapeSubclass'
 
 export interface RectShape {
   x: number
@@ -13,7 +12,7 @@ export interface RectOpts extends ShapeOpts {
   shape: RectShape
 }
 
-export default class Rect extends Shape implements ShapeSubclass<RectShape> {
+export default class Rect extends Shape<RectShape> {
   name = 'Rect'
   shape: RectShape
 

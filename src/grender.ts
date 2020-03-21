@@ -1,6 +1,6 @@
 import Events from './events'
+import Shape from './shape'
 import { addDrag, removeDrag } from './drag'
-import ShapeSubclass from './shapes/shapeSubclass'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
 import { addMouseOverOut, removeMouseOverOut } from './mouseOverOut'
 
@@ -9,7 +9,7 @@ export default class GRender extends Events {
   canvas: HTMLCanvasElement
   ctx: CanvasRenderingContext2D
   raf?: number
-  shapes: ShapeSubclass<unknown>[] = []
+  shapes: Shape<unknown>[] = []
 
   constructor (el: HTMLElement) {
     super()
@@ -76,7 +76,7 @@ export default class GRender extends Events {
     return this
   }
 
-  add<T> (shape: ShapeSubclass<T>): this {
+  add<T> (shape: Shape<T>): this {
     shape.parent = this
     let i = this.shapes.length - 1
 
@@ -97,7 +97,7 @@ export default class GRender extends Events {
     return this
   }
 
-  remove<T> (shape: ShapeSubclass<T>): this {
+  remove<T> (shape: Shape<T>): this {
     const index = this.shapes.findIndex(item => item === shape)
     if (index !== -1) {
       this.shapes.splice(index, 1)

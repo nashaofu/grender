@@ -1,7 +1,7 @@
-import ShapeSubclass from './shapes/shapeSubclass'
+import Shape from './shape'
 
 interface Handlers {
-  shape: ShapeSubclass<unknown>
+  shape: Shape<unknown>
   handler: (e: MouseEvent) => void
 }
 
@@ -11,7 +11,7 @@ window.addEventListener('mousemove', (e: MouseEvent) => {
   MousemoveHandlers.forEach(({ handler }) => handler(e))
 })
 
-export function addMouseOverOut<T> (shape: ShapeSubclass<T>): void {
+export function addMouseOverOut<T> (shape: Shape<T>): void {
   let isInner = false
   MousemoveHandlers.push({
     shape,
@@ -32,7 +32,7 @@ export function addMouseOverOut<T> (shape: ShapeSubclass<T>): void {
   })
 }
 
-export function removeMouseOverOut<T> (shape: ShapeSubclass<T>): void {
+export function removeMouseOverOut<T> (shape: Shape<T>): void {
   const index = MousemoveHandlers.findIndex(item => item.shape === shape)
   if (index !== -1) {
     MousemoveHandlers.splice(index, 1)

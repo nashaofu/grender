@@ -1,6 +1,5 @@
 import { transform } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
-import ShapeSubclass from './shapeSubclass'
 
 export interface EllipseShape {
   x: number
@@ -13,9 +12,8 @@ export interface EllipseOpts extends ShapeOpts {
   shape: EllipseShape
 }
 
-export default class Ellipse extends Shape implements ShapeSubclass<EllipseShape> {
+export default class Ellipse extends Shape<EllipseShape> {
   name = 'Ellipse'
-
   shape: EllipseShape
 
   constructor (opts: EllipseOpts) {

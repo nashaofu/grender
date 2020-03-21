@@ -1,13 +1,21 @@
-import Shape from './shape'
 import GRender from './grender'
-import Rect from './shapes/rect'
-import Circle from './shapes/circle'
-import Ellipse from './shapes/ellipse'
+import Shape, { ShapeOpts } from './shape'
+import Rect, { RectOpts, RectShape } from './shapes/rect'
+import Circle, { CircleOpts, CircleShape } from './shapes/circle'
+import Ellipse, { EllipseOpts, EllipseShape } from './shapes/ellipse'
 
 export {
   Shape,
+  ShapeOpts,
   Rect,
+  RectOpts,
+  RectShape,
   Circle,
+  CircleOpts,
+  CircleShape,
   Ellipse,
+  EllipseOpts,
+  EllipseShape,
+  GRender,
   GRender as default
 }

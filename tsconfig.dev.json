@@ -1,7 +1,0 @@
-{
-  "extends": "./tsconfig.json",
-  "compilerOptions": {
-    "module": "amd",                       /* Specify module code generation: 'none', 'commonjs', 'amd', 'system', 'umd', 'es2015', or 'ESNext'. */                    /* Generates corresponding '.d.ts' file. */
-    "sourceMap": true,                        /* Generates corresponding '.map' file. */
-  }
-}

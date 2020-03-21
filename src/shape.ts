@@ -11,7 +11,7 @@ export interface ShapeOpts {
   brush?: ShapeBrush
 }
 
-export default abstract class Shape extends Events {
+export default abstract class Shape<S> extends Events {
   static uid = 0
 
   // shape的uid
@@ -19,6 +19,8 @@ export default abstract class Shape extends Events {
 
   // 渲染层级
   z = 0
+
+  abstract shape: S
 
   // 画笔
   brush: ShapeBrush = {}
@@ -184,4 +186,7 @@ export default abstract class Shape extends Events {
     }
     return this
   }
+
+  abstract contains(x: number, y: number): boolean
+  abstract render(ctx: CanvasRenderingContext2D): this
 }

@@ -1,7 +1,7 @@
-import ShapeSubclass from './shapes/shapeSubclass'
+import Shape from './shape'
 
 interface EventHandler {
-  shape: ShapeSubclass<unknown>
+  shape: Shape<unknown>
   handler(e: MouseEvent): void
 }
 
@@ -23,7 +23,7 @@ window.addEventListener('mouseup', (e: MouseEvent) => {
   MouseupEventHandlers.forEach(({ handler }) => handler(e))
 })
 
-export function addDrag<T> (shape: ShapeSubclass<T>): void {
+export function addDrag<T> (shape: Shape<T>): void {
   let dragArgs: DragArgs | null = null
 
   shape.on('mousedown', e => {
@@ -61,7 +61,7 @@ export function addDrag<T> (shape: ShapeSubclass<T>): void {
   })
 }
 
-export function removeDrag<T> (shape: ShapeSubclass<T>): void {
+export function removeDrag<T> (shape: Shape<T>): void {
   const mousemoveIndex = MousemoveEventHandlers.findIndex(handler => handler.shape === shape)
   const mouseupIndex = MouseupEventHandlers.findIndex(handler => handler.shape === shape)
   if (mousemoveIndex !== -1) {

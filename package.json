@@ -10,6 +10,8 @@
   ],
   "scripts": {
     "prepublishOnly": "npm run build",
+    "docs:dev": "vuepress dev docs",
+    "docs:build": "vuepress build docs",
     "dev": "rollup --config rollup.config.js --watch",
     "build": "npm run lint && npm run clean && npm run compile",
     "compile": "tsc && rollup --config rollup.config.js --environment MODE:production",
@@ -35,10 +37,10 @@
     "registry": "https://registry.npmjs.org/"
   },
   "devDependencies": {
-    "@typescript-eslint/eslint-plugin": "^2.22.0",
-    "@typescript-eslint/parser": "^2.22.0",
+    "@typescript-eslint/eslint-plugin": "^2.24.0",
+    "@typescript-eslint/parser": "^2.24.0",
     "eslint": "^6.8.0",
-    "eslint-config-standard": "^14.1.0",
+    "eslint-config-standard": "^14.1.1",
     "eslint-plugin-import": "^2.20.1",
     "eslint-plugin-node": "^11.0.0",
     "eslint-plugin-promise": "^4.2.1",
@@ -47,6 +49,7 @@
     "rollup": "^2.1.0",
     "rollup-plugin-terser": "^5.3.0",
     "rollup-plugin-typescript2": "^0.26.0",
-    "typescript": "^3.8.3"
+    "typescript": "^3.8.3",
+    "vuepress": "^1.4.0"
   }
 }

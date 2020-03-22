@@ -1,4 +1,4 @@
-name: vuepress
+name: workflow
 
 on:
   push:
@@ -6,12 +6,16 @@ on:
       - master
 
 jobs:
-  build-docs:
-    name: build-docs
+  docs:
+    name: docs
     runs-on: ubuntu-latest
     steps:
+      - name: init
+        uses: actions/setup-node
+        with:
+          node-version: 12.x
       - name: install
-        uses: actions/setup-node@v1
+        run: yarn install
       - name: build
         run: yarn run docs:build
 

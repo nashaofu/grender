@@ -10,12 +10,14 @@ jobs:
     name: docs
     runs-on: ubuntu-latest
     steps:
-      - name: setup node
+      - name: Checkout
+        uses: checkout@v2
+      - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
-      - name: install
+      - name: Install Dependencies
         run: yarn install
-      - name: build
+      - name: Build docs
         run: ls && yarn run docs:build
 

@@ -3,7 +3,7 @@ module.exports = {
   description: '🛠️ A lightweight canvas library for 2D.',
   base: '/grender/',
   themeConfig: {
-    logo: '/logo.png',
+    logo: '/logo.svg',
     sidebar: 'auto',
     smoothScroll: true,
     repo: 'nashaofu/grender',

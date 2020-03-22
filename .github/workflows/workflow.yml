@@ -34,3 +34,6 @@ jobs:
           BRANCH: gh-pages
           FOLDER: docs/.vuepress/dist
           DEBUG: true
+        env: # Or as an environment variable
+          ACCESS_TOKEN: ${{ secrets.ACCESS_TOKEN }}
+          GITHUB_TOKEN: {{ secrets.ACCESS_TOKEN }}

@@ -1,4 +1,4 @@
-# grender
+# grender![workflow](https://github.com/nashaofu/grender/workflows/workflow/badge.svg)
 
 A lightweight canvas library for 2D.
 

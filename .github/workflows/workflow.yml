@@ -10,12 +10,12 @@ jobs:
     name: docs
     runs-on: ubuntu-latest
     steps:
-      - name: init
+      - name: setup node
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
       - name: install
         run: yarn install
       - name: build
-        run: yarn run docs:build
+        run: ls && yarn run docs:build
 

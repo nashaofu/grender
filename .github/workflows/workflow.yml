@@ -12,17 +12,22 @@ jobs:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
+        with:
+          persist-credentials: false
+
       - name: Setup Node
         uses: actions/setup-node@v1
         with:
           node-version: 12.x
+
       - name: Install Dependencies
         run: yarn
+
       - name: Build docs
         run: yarn docs:build
+
       - name: Deploy docs
-        uses: JamesIves/github-pages-deploy-action@releases/v3
+        uses: peaceiris/actions-gh-pages@v3
         with:
-          ACCESS_TOKEN: ${{ secrets.GITHUBTOKEN }}
-          BRANCH: gh-pages
-          FOLDER: docs/.vuepress/dist
+          github_token: ${{ secrets.GITHUBTOKEN }}
+          publish_dir: docs/.vuepress/dist

@@ -12,9 +12,6 @@ jobs:
     steps:
       - name: install
         uses: actions/setup-node@v1
-        with:
-          node-version: 12.x
-        run: yarn install
       - name: build
         run: yarn run docs:build
 

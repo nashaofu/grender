@@ -21,8 +21,8 @@ jobs:
       - name: Build docs
         run: yarn docs:build
       - name: Deploy docs
-        uses: peaceiris/actions-gh-pages@v3
+        uses: JamesIves/github-pages-deploy-action@releases/v3
         with:
-          github_token: ${{ secrets.GITHUBTOKEN }}
-          publish_dir: ./docs/.vuepress/dist
-          publish_branch: gh-pages
+          ACCESS_TOKEN: ${{ secrets.GITHUBTOKEN }}
+          BRANCH: gh-pages
+          FOLDER: ./docs/.vuepress/dist

@@ -8,8 +8,8 @@
     <meta name="generator" content="VuePress 1.4.0">
     
     
-    <link rel="preload" href="/grender/assets/css/0.styles.a45ef99c.css" as="style"><link rel="preload" href="/grender/assets/js/app.3a6b8ed8.js" as="script"><link rel="preload" href="/grender/assets/js/2.d095602e.js" as="script"><link rel="preload" href="/grender/assets/js/5.54a4007d.js" as="script"><link rel="prefetch" href="/grender/assets/js/3.e85d4011.js"><link rel="prefetch" href="/grender/assets/js/4.5e343848.js"><link rel="prefetch" href="/grender/assets/js/6.ac7b8ce1.js"><link rel="prefetch" href="/grender/assets/js/7.801a0981.js"><link rel="prefetch" href="/grender/assets/js/8.64b97bb0.js">
-    <link rel="stylesheet" href="/grender/assets/css/0.styles.a45ef99c.css">
+    <link rel="preload" href="/grender/assets/css/0.styles.e0f7759b.css" as="style"><link rel="preload" href="/grender/assets/js/app.9fc9ce35.js" as="script"><link rel="preload" href="/grender/assets/js/3.98521f84.js" as="script"><link rel="preload" href="/grender/assets/js/10.ec52a727.js" as="script"><link rel="prefetch" href="/grender/assets/js/1.8336ab07.js"><link rel="prefetch" href="/grender/assets/js/11.282b537e.js"><link rel="prefetch" href="/grender/assets/js/12.0c5e0ca1.js"><link rel="prefetch" href="/grender/assets/js/13.80fdffe0.js"><link rel="prefetch" href="/grender/assets/js/4.d108ded4.js"><link rel="prefetch" href="/grender/assets/js/5.b0a34530.js"><link rel="prefetch" href="/grender/assets/js/6.5f21eaee.js"><link rel="prefetch" href="/grender/assets/js/7.fe249cb1.js"><link rel="prefetch" href="/grender/assets/js/8.ed8a3382.js"><link rel="prefetch" href="/grender/assets/js/9.55d7a8f0.js">
+    <link rel="stylesheet" href="/grender/assets/css/0.styles.e0f7759b.css">
   </head>
   <body>
     <div id="app" data-server-rendered="true"><div class="theme-container no-sidebar"><header class="navbar"><div class="sidebar-button"><svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" role="img" viewBox="0 0 448 512" class="icon"><path fill="currentColor" d="M436 124H12c-6.627 0-12-5.373-12-12V80c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12zm0 160H12c-6.627 0-12-5.373-12-12v-32c0-6.627 5.373-12 12-12h424c6.627 0 12 5.373 12 12v32c0 6.627-5.373 12-12 12z"></path></svg></div> <a href="/grender/" class="home-link router-link-exact-active router-link-active"><img src="/grender/logo.svg" alt="GRender" class="logo"> <span class="site-name can-hide">GRender</span></a> <div class="links"><div class="search-box"><input aria-label="Search" autocomplete="off" spellcheck="false" value=""> <!----></div> <nav class="nav-links can-hide"><div class="nav-item"><a href="/grender/guide/" class="nav-link">
@@ -33,21 +33,47 @@
 </a></p></header> <!----> <div class="theme-default-content custom content__default"><h2 id="起步"><a href="#起步" class="header-anchor">#</a> 起步</h2> <p>安装：</p> <div class="language-bash extra-class"><pre class="language-bash"><code><span class="token function">npm</span> i grender
 <span class="token comment"># or</span>
 <span class="token function">yarn</span> <span class="token function">add</span> grender
-</code></pre></div><p>上手</p> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">import</span> GRender<span class="token punctuation">,</span> <span class="token punctuation">{</span> Rect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'grender'</span>
+</code></pre></div><p>示例</p> <div class="language-html extra-class"><pre class="language-html"><code><span class="token doctype">&lt;!DOCTYPE html&gt;</span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>html</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>head</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">charset</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>utf-8<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>meta</span> <span class="token attr-name">name</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>viewport<span class="token punctuation">&quot;</span></span> <span class="token attr-name">content</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>width=device-width, initial-scale=1<span class="token punctuation">&quot;</span></span> <span class="token punctuation">/&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>title</span><span class="token punctuation">&gt;</span></span>GRender<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>title</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>style</span><span class="token punctuation">&gt;</span></span><span class="token style"><span class="token language-css">
+      <span class="token selector">html,
+      body,
+      #app</span> <span class="token punctuation">{</span>
+        <span class="token property">margin</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+        <span class="token property">padding</span><span class="token punctuation">:</span> 0<span class="token punctuation">;</span>
+        <span class="token property">width</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+        <span class="token property">height</span><span class="token punctuation">:</span> 100%<span class="token punctuation">;</span>
+      <span class="token punctuation">}</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>style</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>head</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>body</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>div</span> <span class="token attr-name">id</span><span class="token attr-value"><span class="token punctuation">=</span><span class="token punctuation">&quot;</span>app<span class="token punctuation">&quot;</span></span><span class="token punctuation">&gt;</span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>div</span><span class="token punctuation">&gt;</span></span>
+    <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;</span>script</span><span class="token punctuation">&gt;</span></span><span class="token script"><span class="token language-javascript">
+      <span class="token keyword">import</span> <span class="token string">'core-js'</span>
+      <span class="token keyword">import</span> GRender<span class="token punctuation">,</span> <span class="token punctuation">{</span> Rect <span class="token punctuation">}</span> <span class="token keyword">from</span> <span class="token string">'grender'</span>
 
-<span class="token keyword">const</span> grender <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GRender</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
-<span class="token keyword">const</span> rect <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
-  shape<span class="token operator">:</span> <span class="token punctuation">{</span>
-    x<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-    y<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
-    width<span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
-    height<span class="token operator">:</span> <span class="token number">80</span>
-  <span class="token punctuation">}</span><span class="token punctuation">,</span>
-  z<span class="token operator">:</span> <span class="token number">2</span>
-<span class="token punctuation">}</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> grender <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GRender</span><span class="token punctuation">(</span>document<span class="token punctuation">.</span><span class="token function">querySelector</span><span class="token punctuation">(</span><span class="token string">'#app'</span><span class="token punctuation">)</span><span class="token punctuation">)</span>
+      <span class="token keyword">const</span> rect <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">Rect</span><span class="token punctuation">(</span><span class="token punctuation">{</span>
+        shape<span class="token operator">:</span> <span class="token punctuation">{</span>
+          x<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+          y<span class="token operator">:</span> <span class="token number">0</span><span class="token punctuation">,</span>
+          width<span class="token operator">:</span> <span class="token number">40</span><span class="token punctuation">,</span>
+          height<span class="token operator">:</span> <span class="token number">80</span>
+        <span class="token punctuation">}</span><span class="token punctuation">,</span>
+        z<span class="token operator">:</span> <span class="token number">2</span>
+      <span class="token punctuation">}</span><span class="token punctuation">)</span>
 
-grender<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>rect<span class="token punctuation">)</span>
-</code></pre></div></div> <!----></main></div><div class="global-ui"></div></div>
-    <script src="/grender/assets/js/app.3a6b8ed8.js" defer></script><script src="/grender/assets/js/2.d095602e.js" defer></script><script src="/grender/assets/js/5.54a4007d.js" defer></script>
+      grender<span class="token punctuation">.</span><span class="token function">add</span><span class="token punctuation">(</span>rect<span class="token punctuation">)</span>
+    </span></span><span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>script</span><span class="token punctuation">&gt;</span></span>
+  <span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>body</span><span class="token punctuation">&gt;</span></span>
+<span class="token tag"><span class="token tag"><span class="token punctuation">&lt;/</span>html</span><span class="token punctuation">&gt;</span></span>
+</code></pre></div></div> <div class="footer">
+    MIT Licensed | Copyright © 2020 nashaofu
+  </div></main></div><div class="global-ui"></div></div>
+    <script src="/grender/assets/js/app.9fc9ce35.js" defer></script><script src="/grender/assets/js/3.98521f84.js" defer></script><script src="/grender/assets/js/10.ec52a727.js" defer></script>
   </body>
 </html>

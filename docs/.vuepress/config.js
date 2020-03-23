@@ -1,3 +1,5 @@
+const path = require('path')
+
 module.exports = {
   title: 'GRender',
   description: '🛠️ A lightweight canvas library for 2D.',
@@ -10,6 +12,7 @@ module.exports = {
     editLinks: true,
     docsDir: 'docs',
     editLinkText: '在 GitHub 上编辑此页',
+    lastUpdated: '上次更新',
     nav: [
       {
         text: '指南',
@@ -20,5 +23,9 @@ module.exports = {
         link: '/api/'
       }
     ]
+  },
+  chainWebpack: (config, isServer) => {
+    // config 是 ChainableConfig 的一个实例
+    config.resolve.alias.set('grender', path.resolve(__dirname, '../../lib'))
   }
 }

@@ -1,0 +1,90 @@
+<template>
+  <div class="demo4">
+    <div>当前触发事件：{{ event }}</div>
+    <div class="demo4-canvas" ref="canvas"></div>
+  </div>
+</template>
+
+<script>
+import GRender, { Rect, Circle, Ellipse } from 'grender'
+
+export default {
+  name: 'Demo4',
+  data() {
+    return {
+      event: undefined
+    }
+  },
+  mounted() {
+    this.grender = new GRender(this.$refs.canvas)
+    const x = this.$refs.canvas.offsetWidth / 2 - 30
+    const rect = new Rect({
+      shape: {
+        x,
+        y: 40,
+        width: 80,
+        height: 40
+      }
+    })
+    const circle = new Circle({
+      shape: {
+        x,
+        y: 100,
+        r: 40
+      }
+    })
+
+    const ellipse = new Ellipse({
+      shape: {
+        x: x + 60,
+        y: 120,
+        rx: 60,
+        ry: 30
+      }
+    })
+
+    this.grender.add(rect)
+    this.grender.add(circle)
+    this.grender.add(ellipse)
+
+    this.grender.shapes.forEach(shape => {
+      shape.on('dragging', e => {
+        shape.translate(e.x, e.y)
+        this.event = 'dragging'
+        this.grender.refresh()
+      })
+
+      shape.on('mouseover', e => {
+        shape.brush.fillStyle = 'red'
+        this.event = 'mouseover'
+        this.grender.refresh()
+      })
+      shape.on('mouseout', e => {
+        shape.brush.fillStyle = 'rgba(0,0,0,0)'
+        this.event = 'mouseout'
+        this.grender.refresh()
+      })
+
+      this.grender.on('mouseup', () => {
+        this.grender.refresh()
+      })
+    })
+    window.addEventListener('resize', this.resize)
+  },
+  destroyed() {
+    window.removeEventListener('resize', this.resize)
+    this.grender.destroy()
+  },
+  methods: {
+    resize() {
+      this.grender.resize()
+    }
+  }
+}
+</script>
+
+<style lang="stylus">
+.demo4
+  &-canvas
+    height 240px
+</style>

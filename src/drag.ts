@@ -12,18 +12,32 @@ interface DragArgs {
   y: number
 }
 
+interface InitListener {
+  (): void
+  inited?: boolean
+}
+
 const MousemoveEventHandlers: EventHandler[] = []
 const MouseupEventHandlers: EventHandler[] = []
 
-window.addEventListener('mousemove', (e: MouseEvent) => {
-  MousemoveEventHandlers.forEach(({ handler }) => handler(e))
-})
+/**
+ * 便于SSR
+ */
+const initListener: InitListener = function (): void {
+  initListener.inited = true
+  window.addEventListener('mousemove', (e: MouseEvent) => {
+    MousemoveEventHandlers.forEach(({ handler }) => handler(e))
+  })
 
-window.addEventListener('mouseup', (e: MouseEvent) => {
-  MouseupEventHandlers.forEach(({ handler }) => handler(e))
-})
+  window.addEventListener('mouseup', (e: MouseEvent) => {
+    MouseupEventHandlers.forEach(({ handler }) => handler(e))
+  })
+}
 
 export function addDrag<T> (shape: Shape<T>): void {
+  if (!initListener.inited) {
+    initListener()
+  }
   let dragArgs: DragArgs | null = null
 
   shape.on('mousedown', e => {

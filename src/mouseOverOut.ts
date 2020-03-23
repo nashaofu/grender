@@ -5,13 +5,27 @@ interface Handlers {
   handler: (e: MouseEvent) => void
 }
 
+interface InitListener {
+  (): void
+  inited?: boolean
+}
+
 const MousemoveHandlers: Handlers[] = []
 
-window.addEventListener('mousemove', (e: MouseEvent) => {
-  MousemoveHandlers.forEach(({ handler }) => handler(e))
-})
+/**
+ * 便于SSR
+ */
+const initListener: InitListener = function (): void {
+  initListener.inited = true
+  window.addEventListener('mousemove', (e: MouseEvent) => {
+    MousemoveHandlers.forEach(({ handler }) => handler(e))
+  })
+}
 
 export function addMouseOverOut<T> (shape: Shape<T>): void {
+  if (!initListener.inited) {
+    initListener()
+  }
   let isInner = false
   MousemoveHandlers.push({
     shape,

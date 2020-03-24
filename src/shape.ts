@@ -21,6 +21,7 @@ export default abstract class Shape<S> extends Events {
   z = 0
 
   abstract shape: S
+  abstract name: string
 
   // 画笔
   brush: ShapeBrush = {}

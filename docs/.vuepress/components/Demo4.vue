@@ -6,7 +6,7 @@
 </template>
 
 <script>
-import GRender, { Rect, Circle, Ellipse } from 'grender'
+import GRender, { Rect, Line, Circle, Ellipse } from 'grender'
 
 export default {
   name: 'Demo4',
@@ -26,6 +26,19 @@ export default {
         height: 40
       }
     })
+
+    const line = new Line({
+      brush: {
+        lineWidth: 2
+      },
+      shape: {
+        x1: x - 50,
+        y1: 40,
+        x2: x + 50,
+        y2: 160
+      }
+    })
+
     const circle = new Circle({
       shape: {
         x,
@@ -44,6 +57,7 @@ export default {
     })
 
     this.grender.add(rect)
+    this.grender.add(line)
     this.grender.add(circle)
     this.grender.add(ellipse)
 
@@ -51,21 +65,18 @@ export default {
       shape.on('dragging', e => {
         shape.translate(e.x, e.y)
         this.event = 'dragging'
-        this.grender.refresh()
       })
 
       shape.on('mouseover', e => {
         shape.brush.fillStyle = 'red'
+        shape.brush.strokeStyle = 'red'
         this.event = 'mouseover'
         this.grender.refresh()
       })
       shape.on('mouseout', e => {
         shape.brush.fillStyle = 'rgba(0,0,0,0)'
+        shape.brush.strokeStyle = '#000'
         this.event = 'mouseout'
-        this.grender.refresh()
-      })
-
-      this.grender.on('mouseup', () => {
         this.grender.refresh()
       })
     })

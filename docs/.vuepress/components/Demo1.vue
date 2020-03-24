@@ -3,7 +3,7 @@
 </template>
 
 <script>
-import GRender, { Rect, Circle, Ellipse } from 'grender'
+import GRender, { Rect, Line, Circle, Ellipse } from 'grender'
 
 export default {
   name: 'Demo1',
@@ -18,6 +18,16 @@ export default {
         height: 40
       }
     })
+
+    const line = new Line({
+      shape: {
+        x1: x - 50,
+        y1: 40,
+        x2: x + 50,
+        y2: 160
+      }
+    })
+
     const circle = new Circle({
       shape: {
         x,
@@ -36,6 +46,7 @@ export default {
     })
 
     this.grender.add(rect)
+    this.grender.add(line)
     this.grender.add(circle)
     this.grender.add(ellipse)
     window.addEventListener('resize', this.resize)

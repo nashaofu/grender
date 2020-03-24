@@ -24,6 +24,7 @@ export default {
       },
       z: 1
     })
+    
     const circle = new Circle({
       brush: {
         lineWidth: 4,

@@ -47,7 +47,7 @@ export default class GRender extends Events {
     this.shapes.forEach(shape => {
       shape.off()
       removeDrag(shape)
-      removeMouseOverOut(shape)
+      removeMouseOverOut(shape, this)
     })
     this.shapes = []
 
@@ -61,7 +61,7 @@ export default class GRender extends Events {
     this.shapes.forEach(shape => {
       shape.off()
       removeDrag(shape)
-      removeMouseOverOut(shape)
+      removeMouseOverOut(shape, this)
     })
     this.off()
     this.shapes = []
@@ -91,7 +91,7 @@ export default class GRender extends Events {
     this.shapes.splice(i, 0, shape)
 
     addDrag(shape)
-    addMouseOverOut(shape)
+    addMouseOverOut(shape, this)
 
     this.refresh()
     return this
@@ -104,7 +104,7 @@ export default class GRender extends Events {
     }
 
     removeDrag(shape)
-    removeMouseOverOut(shape)
+    removeMouseOverOut(shape, this)
 
     this.refresh()
     return this

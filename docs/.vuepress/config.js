@@ -26,6 +26,6 @@ module.exports = {
   },
   chainWebpack: (config, isServer) => {
     // config 是 ChainableConfig 的一个实例
-    config.resolve.alias.set('grender', path.resolve(__dirname, '../../lib'))
+    config.resolve.alias.set('grender', path.resolve(__dirname, '../../dist/grender'))
   }
 }

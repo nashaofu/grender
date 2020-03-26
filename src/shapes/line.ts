@@ -1,5 +1,5 @@
-import { transform } from '../matrix'
 import Shape, { ShapeOpts } from '../shape'
+import { transform, rotate, invert } from '../matrix'
 
 export interface LineShape {
   x1: number
@@ -25,39 +25,46 @@ export default class Rect extends Shape<LineShape> {
     const { x1, y1, x2, y2 } = this.shape
     const { lineWidth } = this.brush
 
+    const lw = typeof lineWidth === 'number' ? lineWidth / 2 : 0
+
+    if (lw <= 0) {
+      return false
+    }
+
     if (this.IM) {
       const p = transform([px, py], this.IM)
       px = p[0]
       py = p[1]
     }
 
-    const lw = typeof lineWidth === 'number' ? lineWidth / 2 : 0
+    if (
+      px < Math.min(x1 - lw, x2 - lw) ||
+      py < Math.min(y1 - lw, y2 - lw) ||
+      px > Math.max(x1 + lw, x2 + lw) ||
+      py > Math.max(y1 + lw, y2 + lw)
+    ) {
+      return false
+    }
 
+    // 直线与x轴的夹角
+    const radian = -Math.atan2(y2 - y1, x2 - x1)
+
+    const m = invert(rotate(radian, this.M))
     /**
-     * 直线的方程为
-     * Ax + By + C = 0 其中(A、B不同时为0)
-     * 点到直线的距离|Ax+By+C|/√(A^2+B^2)
+     * 把直线转换为矩形
      */
-    const A = y2 - y1
-    const B = x1 - x2
-    const C = x2 * y1 - x1 * y2
-
-    // 直线没有长度，缩为一个点
-    if (A === 0 && B === 0) {
-      return Math.sqrt((px - x1) ** 2 + (py - y1) ** 2) <= lw
+    if (m) {
+      const p1 = transform([x1, y1], m)
+      const p2 = transform([x2, y2], m)
+      const p = transform([px, py], m)
+      const x = Math.min(p1[0], p2[0])
+      const y = Math.min(p1[1], p2[1]) - lw
+      const width = Math.abs(p2[0] - p1[0])
+      const height = Math.abs(p2[1] - p1[1]) + lw * 2
+      // 判断是否在矩形内
+      return x <= p[0] && x + width >= p[0] && y <= p[1] && y + height >= p[1]
     } else {
-      /**
-       * 判断是否在直线上
-       * 同时限制不能超出线段长度范围
-       * TODO: 判断不准确，后续修改
-       */
-      return (
-        Math.abs(A * px + B * py + C) / Math.sqrt(A ** 2 + B ** 2) <= lw &&
-        px >= Math.min(x1, x2) &&
-        py >= Math.min(y1, y2) &&
-        px <= Math.max(x1, x2) &&
-        py <= Math.max(y1, y2)
-      )
+      return false
     }
   }
 

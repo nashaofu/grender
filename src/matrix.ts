@@ -17,10 +17,29 @@ export function multiply (m1: number[], m2: number[]): number[] {
 /**
  * 点经过矩阵变换后新的位置
  * @param {number[]} p
- * @param {number} m
+ * @param {number[]} m
  */
 export function transform (p: number[], m: number[]): number[] {
   return [m[0] * p[0] + m[2] * p[1] + m[4], m[1] * p[0] + m[3] * p[1] + m[5]]
+}
+
+/**
+ * 旋转矩阵
+ * @param {number} r
+ * @param {number} m
+ */
+export function rotate (r: number, m: number[]): number[] {
+  const sin = Math.sin(r)
+  const cos = Math.cos(r)
+
+  return [
+    m[0] * cos + m[1] * sin,
+    -m[0] * sin + m[1] * cos,
+    m[2] * cos + m[3] * sin,
+    -m[2] * sin + cos * m[3],
+    m[4],
+    m[5]
+  ]
 }
 
 /**

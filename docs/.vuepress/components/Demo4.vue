@@ -69,7 +69,7 @@ export default {
 
       shape.on('mouseover', e => {
         shape.brush.fillStyle = 'red'
-        shape.brush.strokeStyle = 'red'
+        shape.brush.strokeStyle = 'blue'
         this.event = 'mouseover'
         this.grender.refresh()
       })

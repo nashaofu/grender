@@ -67,17 +67,19 @@ export default {
         this.event = 'dragging'
       })
 
-      shape.on('mouseover', e => {
+      shape.on('mouseenter', e => {
         shape.brush.fillStyle = 'red'
         shape.brush.strokeStyle = 'blue'
-        this.event = 'mouseover'
+        this.event = 'mouseenter'
         this.grender.refresh()
       })
-      shape.on('mouseout', e => {
+      shape.on('mouseleave', e => {
         shape.brush.fillStyle = 'rgba(0,0,0,0)'
         shape.brush.strokeStyle = '#000'
-        this.event = 'mouseout'
+        this.event = 'mouseleave'
+        this.$refs.canvas.style.cursor = 'pointer'
         this.grender.refresh()
+        console.log(e)
       })
     })
     window.addEventListener('resize', this.resize)

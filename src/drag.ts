@@ -1,4 +1,5 @@
 import Shape from './shape'
+import { ProxyEvent } from './utils'
 
 interface EventHandler {
   shape: Shape<unknown>
@@ -40,10 +41,10 @@ export function addDrag<T> (shape: Shape<T>): void {
   }
   let dragArgs: DragArgs | null = null
 
-  shape.on('mousedown', e => {
-    if (!shape.parent) return
+  shape.on('mousedown', (e: ProxyEvent) => {
+    if (!shape.parent || e.target !== shape) return
     const [x, y] = shape.T
-    const { clientX, clientY } = <MouseEvent>e
+    const { clientX, clientY } = <MouseEvent>e.event
     dragArgs = {
       ox: clientX - x,
       oy: clientY - y,

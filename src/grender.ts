@@ -1,5 +1,6 @@
 import Events from './events'
 import Shape from './shape'
+import { createProxyEvent } from './utils'
 import { addDrag, removeDrag } from './drag'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
 import { addMouseOverOut, removeMouseOverOut } from './mouseOverOut'
@@ -26,6 +27,7 @@ export default class GRender extends Events {
     this.canvas.addEventListener('mousedown', this.onMousedown)
     this.canvas.addEventListener('mousemove', this.onMousemove)
     this.canvas.addEventListener('mouseup', this.onMouseup)
+    this.canvas.addEventListener('contextmenu', this.onContextMenu)
   }
 
   get width (): number {
@@ -70,6 +72,7 @@ export default class GRender extends Events {
     this.canvas.removeEventListener('mousedown', this.onMousedown)
     this.canvas.removeEventListener('mousemove', this.onMousemove)
     this.canvas.removeEventListener('mouseup', this.onMouseup)
+    this.canvas.removeEventListener('contextmenu', this.onContextMenu)
 
     this.el.removeChild(this.canvas)
 
@@ -147,62 +150,113 @@ export default class GRender extends Events {
   }
 
   onClick = (e: MouseEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('click', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('click', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('click', event)
       }
-    })
-    this.emit('click', e)
+    }
+    this.emit('click', event)
     return this
   }
 
   onDblclick = (e: MouseEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('dblclick', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('dblclick', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('dblclick', event)
       }
-    })
-    this.emit('dblclick', e)
+    }
+    this.emit('dblclick', event)
     return this
   }
 
   onWheel = (e: WheelEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('wheel', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('wheel', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('wheel', event)
       }
-    })
-    this.emit('wheel', e)
+    }
+    this.emit('wheel', event)
     return this
   }
 
   onMousedown = (e: MouseEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('mousedown', e, null)
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('mousedown', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('mousedown', event)
       }
-    })
-    this.emit('mousedown', e)
+    }
+    this.emit('mousedown', event)
     return this
   }
 
   onMousemove = (e: MouseEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('mousemove', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('mousemove', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('mousemove', event)
       }
-    })
-    this.emit('mousemove', e)
+    }
+    this.emit('mousemove', event)
     return this
   }
 
   onMouseup = (e: MouseEvent): this => {
-    this.shapes.forEach(shape => {
+    const event = createProxyEvent('mouseup', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
       if (shape.contains(e.offsetX, e.offsetY)) {
-        shape.emit('mouseup', e)
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('mouseup', event)
       }
-    })
-    this.emit('mouseup', e)
+    }
+    this.emit('mouseup', event)
+    return this
+  }
+
+  onContextMenu = (e: MouseEvent): this => {
+    const event = createProxyEvent('contextmenu', e, null)
+
+    for (let i = this.shapes.length - 1; i >= 0; i--) {
+      const shape = this.shapes[i]
+      if (shape.contains(e.offsetX, e.offsetY)) {
+        if (!event.target) {
+          event.target = shape
+        }
+        shape.emit('contextmenu', event)
+      }
+    }
+    this.emit('contextmenu', event)
     return this
   }
 }

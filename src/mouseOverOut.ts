@@ -1,25 +1,39 @@
 import Shape from './shape'
 import GRender from './grender'
+import { createProxyEvent, ProxyEvent } from './utils'
 
 interface Handlers {
   shape: Shape<unknown>
-  handler: (e: MouseEvent) => void
+  handler: (e: ProxyEvent) => void
 }
 
 const MousemoveHandlers: Handlers[] = []
 
 export function addMouseOverOut<T> (shape: Shape<T>, grender: GRender): void {
-  let isInner = false
-  const handler = (e: MouseEvent): void => {
-    if (shape.contains(e.offsetX, e.offsetY)) {
-      if (!isInner) {
-        shape.emit('mouseover', e)
-        isInner = true
+  let isOver = false
+  let isEnter = false
+  const handler = (e: ProxyEvent): void => {
+    const { offsetX, offsetY } = <MouseEvent>e.event
+    if (shape.contains(offsetX, offsetY)) {
+      if (!isOver) {
+        shape.emit('mouseover', createProxyEvent('mouseover', e.event, shape))
+        isOver = true
       }
     } else {
-      if (isInner) {
-        shape.emit('mouseout', e)
-        isInner = false
+      if (isOver) {
+        shape.emit('mouseout', createProxyEvent('mouseout', e.event, shape))
+        isOver = false
+      }
+    }
+    if (e.target === shape) {
+      if (!isEnter && isOver) {
+        shape.emit('mouseenter', createProxyEvent('mouseenter', e.event, shape))
+        isEnter = true
+      }
+    } else {
+      if (isEnter) {
+        shape.emit('mouseleave', createProxyEvent('mouseleave', e.event, shape))
+        isEnter = false
       }
     }
   }

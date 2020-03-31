@@ -15,9 +15,26 @@ export default class GRender extends Events {
   constructor (el: HTMLElement) {
     super()
     this.el = el
+
+    this.el.style.setProperty('overflow', 'hidden')
+    this.el.style.setProperty('user-select', 'none')
+    this.el.style.setProperty('position', 'relative')
+    this.el.style.setProperty('touch-action', 'pan-y')
+    this.el.style.setProperty('-webkit-user-drag', 'none')
+    this.el.style.setProperty('-webkit-user-select', 'none')
+    this.el.style.setProperty('-webkit-tap-highlight-color', 'transparent')
+
     this.canvas = document.createElement('canvas')
     this.canvas.width = this.el.offsetWidth
     this.canvas.height = this.el.offsetHeight
+    this.canvas.style.setProperty('overflow', 'hidden')
+    this.canvas.style.setProperty('user-select', 'none')
+    this.canvas.style.setProperty('position', 'relative')
+    this.canvas.style.setProperty('touch-action', 'none')
+    this.canvas.style.setProperty('-webkit-user-drag', 'none')
+    this.canvas.style.setProperty('-webkit-user-select', 'none')
+    this.canvas.style.setProperty('-webkit-tap-highlight-color', 'transparent')
+
     this.el.appendChild(this.canvas)
     this.ctx = <CanvasRenderingContext2D> this.canvas.getContext('2d')
 

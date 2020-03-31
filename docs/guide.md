@@ -41,7 +41,7 @@
 
 ## 鼠标事件
 
-图形目前支持`click`、`dblclick`、`wheel`、`mousedown`、`mousemove`、`mouseup`、`mouseover`、`mouseout`、`mouseover`和与`mouseout`事件。同时也支持`dragstart`、`dragging`和`dragend`等复合事件
+图形目前支持`click`、`dblclick`、`wheel`、`mousedown`、`mousemove`、`mouseup`、`mouseover`、`mouseout`、`mouseenter`和与`mouseleave`事件。同时也支持`dragstart`、`dragging`和`dragend`等复合事件
 
 <Demo4 />
 

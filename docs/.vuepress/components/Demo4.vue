@@ -71,15 +71,15 @@ export default {
         shape.brush.fillStyle = 'red'
         shape.brush.strokeStyle = 'blue'
         this.event = 'mouseenter'
+        this.$refs.canvas.style.cursor = 'pointer'
         this.grender.refresh()
       })
       shape.on('mouseleave', e => {
         shape.brush.fillStyle = 'rgba(0,0,0,0)'
         shape.brush.strokeStyle = '#000'
         this.event = 'mouseleave'
-        this.$refs.canvas.style.cursor = 'pointer'
+        this.$refs.canvas.style.cursor = 'default'
         this.grender.refresh()
-        console.log(e)
       })
     })
     window.addEventListener('resize', this.resize)
@@ -98,6 +98,7 @@ export default {
 
 <style lang="stylus">
 .demo4
+  border 2px solid #000
   &-canvas
     height 240px
 </style>

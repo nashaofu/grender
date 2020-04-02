@@ -3,7 +3,9 @@
   "version": "0.0.2",
   "description": "A lightweight canvas library for 2D.",
   "types": "lib/index.d.ts",
-  "main": "lib/index.js",
+  "main": "dist/grender.js",
+  "module": "lib/index.js",
+  "sideEffects": false,
   "files": [
     "lib",
     "dist"

@@ -135,7 +135,7 @@ export default class GRender extends Events {
     return this
   }
 
-  render (): this {
+  private render (): this {
     if (this.raf != null) {
       cancelAnimationFrame(this.raf)
     }
@@ -166,7 +166,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onClick = (e: MouseEvent): this => {
+  private onClick = (e: MouseEvent): this => {
     const event = createProxyEvent('click', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
@@ -182,7 +182,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onDblclick = (e: MouseEvent): this => {
+  private onDblclick = (e: MouseEvent): this => {
     const event = createProxyEvent('dblclick', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
@@ -198,7 +198,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onWheel = (e: WheelEvent): this => {
+  private onWheel = (e: WheelEvent): this => {
     const event = createProxyEvent('wheel', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
@@ -214,7 +214,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onMousedown = (e: MouseEvent): this => {
+  private onMousedown = (e: MouseEvent): this => {
     const event = createProxyEvent('mousedown', e, null)
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
@@ -229,7 +229,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onMousemove = (e: MouseEvent): this => {
+  private onMousemove = (e: MouseEvent): this => {
     const event = createProxyEvent('mousemove', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
@@ -245,7 +245,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onMouseup = (e: MouseEvent): this => {
+  private onMouseup = (e: MouseEvent): this => {
     const event = createProxyEvent('mouseup', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
@@ -261,7 +261,7 @@ export default class GRender extends Events {
     return this
   }
 
-  onContextMenu = (e: MouseEvent): this => {
+  private onContextMenu = (e: MouseEvent): this => {
     const event = createProxyEvent('contextmenu', e, null)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {

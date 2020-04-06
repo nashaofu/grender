@@ -1,22 +1,22 @@
 import Shape, { ShapeOpts } from '../shape'
 import { transform, rotate, invert } from '../matrix'
 
-export interface LineShape {
+export interface ArrowShape {
   x1: number
   y1: number
   x2: number
   y2: number
 }
 
-export interface LineOpts extends ShapeOpts {
-  shape: LineShape
+export interface ArrowOpts extends ShapeOpts {
+  shape: ArrowShape
 }
 
-export default class Rect extends Shape<LineShape> {
-  name = 'Line'
-  shape: LineShape
+export default class Arrow extends Shape<ArrowShape> {
+  name = 'Arrow'
+  shape: ArrowShape
 
-  constructor (opts: LineOpts) {
+  constructor (opts: ArrowOpts) {
     super(opts)
     this.shape = opts.shape
   }
@@ -72,11 +72,37 @@ export default class Rect extends Shape<LineShape> {
     const { x1, y1, x2, y2 } = this.shape
     const { lineWidth } = this.brush
 
-    ctx.moveTo(x1, y1)
-    ctx.lineTo(x2, y2)
+    const lw = typeof lineWidth === 'number' ? lineWidth : 1
 
-    if (lineWidth !== 0) {
+    const shouldStroke = lw !== 0
+
+    const radian = Math.atan2(y2 - y1, x2 - x1)
+    const sin = Math.sin(radian)
+    const cos = Math.cos(radian)
+
+    const h = lw * 2
+    const a = lw * 0.8
+    const x3 = x2 - h * cos
+    const y3 = y2 - h * sin
+    const x4 = x3 - a * sin
+    const y4 = y3 + a * cos
+    const x5 = x3 + a * sin
+    const y5 = y3 - a * cos
+
+    ctx.fillStyle = ctx.strokeStyle
+
+    ctx.moveTo(x1, y1)
+    ctx.lineTo(x3, y3)
+    ctx.moveTo(x3, y3)
+    ctx.lineTo(x4, y4)
+    ctx.lineTo(x2, y2)
+    ctx.lineTo(x5, y5)
+    ctx.lineTo(x4, y4)
+    ctx.closePath()
+
+    if (shouldStroke) {
       ctx.stroke()
+      ctx.fill()
     }
 
     return this

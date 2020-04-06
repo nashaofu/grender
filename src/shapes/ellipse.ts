@@ -47,7 +47,7 @@ export default class Ellipse extends Shape<EllipseShape> {
 
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, rx, ry } = this.shape
-    const { fillStyle, lineWidth } = this.brush
+    const { lineWidth, fillStyle } = this.brush
 
     const k = 0.5522848
     const ox = rx * k // 水平控制点偏移量
@@ -59,12 +59,15 @@ export default class Ellipse extends Shape<EllipseShape> {
     ctx.bezierCurveTo(x + rx, y + oy, x + ox, y + ry, x, y + ry)
     ctx.bezierCurveTo(x - ox, y + ry, x - rx, y + oy, x - rx, y)
     ctx.closePath()
-    if (fillStyle) {
-      ctx.fill()
-    }
+
     if (lineWidth !== 0) {
       ctx.stroke()
     }
+
+    if (fillStyle) {
+      ctx.fill()
+    }
+
     return this
   }
 }

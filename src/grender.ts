@@ -131,36 +131,33 @@ export default class GRender extends Events {
   }
 
   refresh (): this {
-    this.render()
-    return this
-  }
-
-  private render (): this {
     if (this.raf != null) {
       cancelAnimationFrame(this.raf)
     }
 
-    this.raf = requestAnimationFrame(() => {
-      this.ctx.clearRect(0, 0, this.width, this.height)
+    this.raf = requestAnimationFrame(() => this.render())
+    return this
+  }
 
-      this.shapes.forEach(shape => {
-        const [a, b, c, d, e, f] = shape.GM
+  render (): this {
+    this.ctx.clearRect(0, 0, this.width, this.height)
 
-        // 设置Transform
-        this.ctx.setTransform(a, b, c, d, e, f)
+    this.shapes.forEach(shape => {
+      const [a, b, c, d, e, f] = shape.GM
 
-        this.ctx.beginPath()
-        ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
-          const shapeBrush = shape.brush[key]
-          const defaultValue = defaultShapeBrushs[key]
-          this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
-        })
-
-        shape.render(this.ctx)
-
-        // 恢复Transform
-        this.ctx.setTransform(1, 0, 0, 1, 0, 0)
+      // 设置Transform
+      this.ctx.setTransform(a, b, c, d, e, f)
+      ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
+        const shapeBrush = shape.brush[key]
+        const defaultValue = defaultShapeBrushs[key]
+        this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
       })
+
+      this.ctx.beginPath()
+      shape.render(this.ctx)
+
+      // 恢复Transform
+      this.ctx.setTransform(1, 0, 0, 1, 0, 0)
     })
 
     return this

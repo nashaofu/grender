@@ -45,16 +45,19 @@ export default class Rect extends Shape<RectShape> {
 
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, width, height } = this.shape
-    const { fillStyle, lineWidth } = this.brush
+    const { lineWidth, fillStyle } = this.brush
+
     ctx.rect(x, y, width, height)
     ctx.closePath()
+
+    if (lineWidth !== 0) {
+      ctx.stroke()
+    }
 
     if (fillStyle) {
       ctx.fill()
     }
-    if (lineWidth !== 0) {
-      ctx.stroke()
-    }
+
     return this
   }
 }

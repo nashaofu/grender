@@ -17,7 +17,7 @@ export interface ShapeBrush {
 }
 
 // 支持的样式
-export const defaultShapeBrushs: ShapeBrush = {
+export const defaultShapeBrushs = {
   fillStyle: '#000000',
   font: '10px sans-serif',
   globalAlpha: 1,

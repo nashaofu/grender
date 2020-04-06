@@ -43,15 +43,19 @@ export default class Circle extends Shape<CircleShape> {
 
   render (ctx: CanvasRenderingContext2D): this {
     const { x, y, r } = this.shape
-    const { fillStyle, lineWidth } = this.brush
+    const { lineWidth, fillStyle } = this.brush
+
     ctx.arc(x, y, r, 0, 2 * Math.PI)
     ctx.closePath()
-    if (fillStyle) {
-      ctx.fill()
-    }
+
     if (lineWidth !== 0) {
       ctx.stroke()
     }
+
+    if (fillStyle) {
+      ctx.fill()
+    }
+
     return this
   }
 }

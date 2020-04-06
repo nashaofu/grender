@@ -20,7 +20,9 @@ const grender = new GRender((el: HTMLElement))
 
 - `remove<T>(shape: Shape<T>): this`: 移除画布上的图形
 
-- `refresh(): this`: 浏览器下一帧刷新画布
+- `refresh(): this`: 浏览器下一帧刷新画布，异步执行
+
+- `render(): this`: 立即刷新画布，同步执行
 
 ### 事件
 

@@ -1,5 +1,5 @@
 <template>
-  <div class="demo2"></div>
+  <div class="demo2" style="height: 180px"></div>
 </template>
 
 <script>
@@ -24,7 +24,7 @@ export default {
       },
       z: 1
     })
-    
+
     const circle = new Circle({
       brush: {
         lineWidth: 4,
@@ -67,8 +67,3 @@ export default {
   }
 }
 </script>
-
-<style lang="stylus">
-.demo2
-  height 180px
-</style>

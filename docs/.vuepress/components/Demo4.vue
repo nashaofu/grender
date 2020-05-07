@@ -1,7 +1,7 @@
 <template>
-  <div class="demo4">
+  <div class="demo4" style="border: 2px solid #000;">
     <div>当前触发事件：{{ event }}</div>
-    <div class="demo4-canvas" ref="canvas"></div>
+    <div class="demo4-canvas" style="height: 240px;" ref="canvas"></div>
   </div>
 </template>
 
@@ -10,12 +10,12 @@ import GRender, { Rect, Line, Arrow, Circle, Ellipse } from 'grender'
 
 export default {
   name: 'Demo4',
-  data() {
+  data () {
     return {
       event: undefined
     }
   },
-  mounted() {
+  mounted () {
     this.grender = new GRender(this.$refs.canvas)
     const x = this.$refs.canvas.offsetWidth / 2 - 30
     const rect = new Rect({
@@ -97,21 +97,14 @@ export default {
     })
     window.addEventListener('resize', this.resize)
   },
-  destroyed() {
+  destroyed () {
     window.removeEventListener('resize', this.resize)
     this.grender.destroy()
   },
   methods: {
-    resize() {
+    resize () {
       this.grender.resize()
     }
   }
 }
 </script>
-
-<style lang="stylus">
-.demo4
-  border 2px solid #000
-  &-canvas
-    height 240px
-</style>

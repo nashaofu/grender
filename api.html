@@ -7,7 +7,7 @@
     <meta name="generator" content="VuePress 1.4.1">
     
     <meta name="description" content="🛠️ A lightweight canvas library for 2D.">
-    <link rel="preload" href="/grender/assets/css/0.styles.a87b296e.css" as="style"><link rel="preload" href="/grender/assets/js/app.e4a84f43.js" as="script"><link rel="preload" href="/grender/assets/js/3.099d00ac.js" as="script"><link rel="preload" href="/grender/assets/js/11.be5abe71.js" as="script"><link rel="prefetch" href="/grender/assets/js/1.14d67bb2.js"><link rel="prefetch" href="/grender/assets/js/10.8c0e9ddf.js"><link rel="prefetch" href="/grender/assets/js/12.03d29c15.js"><link rel="prefetch" href="/grender/assets/js/13.651ceffb.js"><link rel="prefetch" href="/grender/assets/js/4.eedb09e9.js"><link rel="prefetch" href="/grender/assets/js/5.ebf409fb.js"><link rel="prefetch" href="/grender/assets/js/6.899c2a69.js"><link rel="prefetch" href="/grender/assets/js/7.f9c62352.js"><link rel="prefetch" href="/grender/assets/js/8.b1420a31.js"><link rel="prefetch" href="/grender/assets/js/9.4331dafa.js">
+    <link rel="preload" href="/grender/assets/css/0.styles.a87b296e.css" as="style"><link rel="preload" href="/grender/assets/js/app.84430767.js" as="script"><link rel="preload" href="/grender/assets/js/3.bd51df29.js" as="script"><link rel="preload" href="/grender/assets/js/11.35c49f18.js" as="script"><link rel="prefetch" href="/grender/assets/js/1.e02ac0b0.js"><link rel="prefetch" href="/grender/assets/js/10.d487df4f.js"><link rel="prefetch" href="/grender/assets/js/12.5d512146.js"><link rel="prefetch" href="/grender/assets/js/13.fa65263a.js"><link rel="prefetch" href="/grender/assets/js/14.09cae1ff.js"><link rel="prefetch" href="/grender/assets/js/4.66067303.js"><link rel="prefetch" href="/grender/assets/js/5.260ba1d7.js"><link rel="prefetch" href="/grender/assets/js/6.c3b66a1e.js"><link rel="prefetch" href="/grender/assets/js/7.281e636d.js"><link rel="prefetch" href="/grender/assets/js/8.47ee6a0d.js"><link rel="prefetch" href="/grender/assets/js/9.bb775aac.js">
     <link rel="stylesheet" href="/grender/assets/css/0.styles.a87b296e.css">
   </head>
   <body>
@@ -15,23 +15,123 @@
   指南
 </a></div><div class="nav-item"><a href="/grender/api/" class="nav-link">
   API
+</a></div><div class="nav-item"><a href="/grender/shape/" class="nav-link">
+  图形
 </a></div> <a href="https://github.com/nashaofu/grender" target="_blank" rel="noopener noreferrer" class="repo-link">
     GitHub
     <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav></div></header> <div class="sidebar-mask"></div> <aside class="sidebar"><nav class="nav-links"><div class="nav-item"><a href="/grender/guide/" class="nav-link">
   指南
 </a></div><div class="nav-item"><a href="/grender/api/" class="nav-link">
   API
+</a></div><div class="nav-item"><a href="/grender/shape/" class="nav-link">
+  图形
 </a></div> <a href="https://github.com/nashaofu/grender" target="_blank" rel="noopener noreferrer" class="repo-link">
     GitHub
-    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>API</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/grender/api.html#grender" class="sidebar-link">GRender</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/grender/api.html#初始化" class="sidebar-link">初始化</a></li><li class="sidebar-sub-header"><a href="/grender/api.html#方法" class="sidebar-link">方法</a></li><li class="sidebar-sub-header"><a href="/grender/api.html#事件" class="sidebar-link">事件</a></li></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="api"><a href="#api" class="header-anchor">#</a> API</h1> <h2 id="grender"><a href="#grender" class="header-anchor">#</a> GRender</h2> <h3 id="初始化"><a href="#初始化" class="header-anchor">#</a> 初始化</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> grender <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GRender</span><span class="token punctuation">(</span><span class="token punctuation">(</span>el<span class="token operator">:</span> HTMLElement<span class="token punctuation">)</span><span class="token punctuation">)</span>
-</code></pre></div><h3 id="方法"><a href="#方法" class="header-anchor">#</a> 方法</h3> <ul><li><p><code>resize(): this</code>: 重新调整画布大小</p></li> <li><p><code>clear(): this</code>: 移除画布上的所有元素</p></li> <li><p><code>destroy(): this</code>: 销毁画布</p></li> <li><p><code>add&lt;T&gt;(shape: Shape&lt;T&gt;): this</code>: 添加图形到画布上</p></li> <li><p><code>remove&lt;T&gt;(shape: Shape&lt;T&gt;): this</code>: 移除画布上的图形</p></li> <li><p><code>refresh(): this</code>: 浏览器下一帧刷新画布，异步执行</p></li> <li><p><code>render(): this</code>: 立即刷新画布，同步执行</p></li></ul> <h3 id="事件"><a href="#事件" class="header-anchor">#</a> 事件</h3> <ul><li>事件对象</li></ul> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">interface</span> <span class="token class-name">ProxyEvent</span> <span class="token punctuation">{</span>
+    <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></a></nav>  <ul class="sidebar-links"><li><section class="sidebar-group depth-0"><p class="sidebar-heading open"><span>API</span> <!----></p> <ul class="sidebar-links sidebar-group-items"><li><a href="/grender/api.html#grender" class="sidebar-link">GRender</a><ul class="sidebar-sub-headers"><li class="sidebar-sub-header"><a href="/grender/api.html#初始化" class="sidebar-link">初始化</a></li><li class="sidebar-sub-header"><a href="/grender/api.html#方法" class="sidebar-link">方法</a></li><li class="sidebar-sub-header"><a href="/grender/api.html#鼠标事件" class="sidebar-link">鼠标事件</a></li></ul></li><li><a href="/grender/api.html#shape" class="sidebar-link">Shape</a><ul class="sidebar-sub-headers"></ul></li></ul></section></li></ul> </aside> <main class="page"> <div class="theme-default-content content__default"><h1 id="api"><a href="#api" class="header-anchor">#</a> API</h1> <h2 id="grender"><a href="#grender" class="header-anchor">#</a> GRender</h2> <h3 id="初始化"><a href="#初始化" class="header-anchor">#</a> 初始化</h3> <div class="language-js extra-class"><pre class="language-js"><code><span class="token keyword">const</span> grender <span class="token operator">=</span> <span class="token keyword">new</span> <span class="token class-name">GRender</span><span class="token punctuation">(</span><span class="token punctuation">(</span>el<span class="token operator">:</span> HTMLElement<span class="token punctuation">)</span><span class="token punctuation">)</span>
+</code></pre></div><h3 id="方法"><a href="#方法" class="header-anchor">#</a> 方法</h3> <ul><li><p><code>resize(): this</code>: 重新调整画布大小</p></li> <li><p><code>clear(): this</code>: 移除画布上的所有元素</p></li> <li><p><code>destroy(): this</code>: 销毁画布</p></li> <li><p><code>add&lt;T&gt;(shape: Shape&lt;T&gt;): this</code>: 添加图形到画布上</p></li> <li><p><code>remove&lt;T&gt;(shape: Shape&lt;T&gt;): this</code>: 移除画布上的图形</p></li> <li><p><code>refresh(): this</code>: 浏览器下一帧刷新画布，异步执行</p></li> <li><p><code>render(): this</code>: 立即刷新画布，同步执行</p></li></ul> <h3 id="鼠标事件"><a href="#鼠标事件" class="header-anchor">#</a> 鼠标事件</h3> <ul><li>事件对象</li></ul> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">interface</span> <span class="token class-name">ProxyMouseEvent</span> <span class="token punctuation">{</span>
   event<span class="token operator">:</span> Event <span class="token comment">// 浏览器原生事件</span>
   <span class="token keyword">type</span><span class="token operator">:</span> <span class="token builtin">string</span> <span class="token comment">// 事件类型名称</span>
   target<span class="token operator">:</span> Shape<span class="token operator">&lt;</span><span class="token builtin">unknown</span><span class="token operator">&gt;</span> <span class="token operator">|</span> <span class="token keyword">null</span> <span class="token comment">// 触发事件的最上层图形</span>
   <span class="token function-variable function">stop</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token comment">// 停止事件传播</span>
   <span class="token function-variable function">prevent</span><span class="token operator">:</span> <span class="token punctuation">(</span><span class="token punctuation">)</span> <span class="token operator">=&gt;</span> <span class="token keyword">void</span> <span class="token comment">// 阻止默认事件</span>
+  x<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token comment">// 转换后的坐标</span>
+  y<span class="token operator">:</span> <span class="token builtin">number</span> <span class="token comment">// 转换后的坐标</span>
 <span class="token punctuation">}</span>
-</code></pre></div><h4 id="支持事件列表"><a href="#支持事件列表" class="header-anchor">#</a> 支持事件列表</h4> <ul><li>click</li> <li>dblclick</li> <li>wheel</li> <li>mousedown</li> <li>mousemove</li> <li>mouseup</li> <li>contextmenu</li></ul></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/nashaofu/grender/edit/master/docs/api.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/8/2020, 12:41:53 PM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
-    <script src="/grender/assets/js/app.e4a84f43.js" defer></script><script src="/grender/assets/js/3.099d00ac.js" defer></script><script src="/grender/assets/js/11.be5abe71.js" defer></script>
+</code></pre></div><h4 id="支持事件列表"><a href="#支持事件列表" class="header-anchor">#</a> 支持事件列表</h4> <ul><li>click</li> <li>dblclick</li> <li>wheel</li> <li>mousedown</li> <li>mousemove</li> <li>mouseup</li> <li>contextmenu</li> <li>mouseover</li> <li>mouseout</li> <li>mouseenter</li></ul> <h2 id="shape"><a href="#shape" class="header-anchor">#</a> Shape</h2> <p>grender渲染的图形都必须继承自<code>Shape</code>类。子类必须实现<code>shape</code>、<code>name</code>属性，和<code>contains</code>、<code>render</code>方法</p> <div class="language-ts extra-class"><pre class="language-ts"><code><span class="token keyword">abstract</span> <span class="token keyword">class</span> <span class="token class-name">Shape</span><span class="token operator">&lt;</span><span class="token constant">S</span><span class="token operator">&gt;</span> <span class="token keyword">extends</span> <span class="token class-name">Events</span> <span class="token punctuation">{</span>
+  <span class="token keyword">abstract</span> shape<span class="token operator">:</span> <span class="token constant">S</span>
+  <span class="token keyword">abstract</span> name<span class="token operator">:</span> <span class="token builtin">string</span>
+
+  <span class="token keyword">abstract</span> <span class="token function">contains</span><span class="token punctuation">(</span>x<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> y<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">boolean</span>
+  <span class="token keyword">abstract</span> <span class="token function">render</span><span class="token punctuation">(</span>ctx<span class="token operator">:</span> CanvasRenderingContext2D<span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">this</span>
+
+  <span class="token keyword">static</span> uid <span class="token operator">=</span> <span class="token number">0</span>
+
+  <span class="token comment">// shape的uid</span>
+  uid<span class="token operator">:</span> <span class="token builtin">number</span>
+
+  <span class="token comment">// 渲染层级</span>
+  z <span class="token operator">=</span> <span class="token number">0</span>
+
+  <span class="token comment">// 画笔</span>
+  brush<span class="token operator">:</span> ShapeBrush <span class="token operator">=</span> <span class="token punctuation">{</span><span class="token punctuation">}</span>
+
+  <span class="token comment">// 父级元素</span>
+  parent<span class="token operator">?</span><span class="token operator">:</span> GRender
+
+  <span class="token comment">// shape自身的变换矩阵</span>
+  <span class="token constant">M</span> <span class="token operator">=</span> <span class="token punctuation">[</span><span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">1</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">,</span> <span class="token number">0</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 局部逆矩阵
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">IM</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">null</span>
+
+  <span class="token comment">/**
+   * 当前变换位置
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">T</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 当前缩放比例
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">S</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 当前旋转角度
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">R</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span>
+
+  <span class="token comment">/**
+   * 全局变换矩阵
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">GM</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 全局逆矩阵
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">GIM</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span> <span class="token operator">|</span> <span class="token keyword">null</span>
+
+  <span class="token comment">/**
+   * 当前全局变换位置
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">GT</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 当前全局缩放比例
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">GS</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">[</span><span class="token punctuation">]</span>
+
+  <span class="token comment">/**
+   * 当前全局旋转角度
+   */</span>
+  <span class="token keyword">get</span> <span class="token constant">GR</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token builtin">number</span>
+
+  <span class="token comment">/**
+   * 位移
+   * @param {number} tx
+   * @param {number} ty
+   */</span>
+  <span class="token function">translate</span> <span class="token punctuation">(</span>tx<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> ty<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">this</span>
+
+  <span class="token comment">/**
+   * 缩放
+   * @param {number} sx
+   * @param {number} sy
+   */</span>
+  <span class="token function">scale</span> <span class="token punctuation">(</span>sx<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">,</span> sy<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">this</span>
+
+  <span class="token comment">/**
+   * 旋转
+   * @param {number} r
+   */</span>
+  <span class="token function">rotate</span> <span class="token punctuation">(</span>r<span class="token operator">:</span> <span class="token builtin">number</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">this</span>
+
+  <span class="token comment">/**
+   * 刷新shape
+   */</span>
+  <span class="token function">refresh</span> <span class="token punctuation">(</span><span class="token punctuation">)</span><span class="token operator">:</span> <span class="token keyword">this</span>
+<span class="token punctuation">}</span>
+</code></pre></div></div> <footer class="page-edit"><div class="edit-link"><a href="https://github.com/nashaofu/grender/edit/master/docs/api.md" target="_blank" rel="noopener noreferrer">在 GitHub 上编辑此页</a> <svg xmlns="http://www.w3.org/2000/svg" aria-hidden="true" x="0px" y="0px" viewBox="0 0 100 100" width="15" height="15" class="icon outbound"><path fill="currentColor" d="M18.8,85.1h56l0,0c2.2,0,4-1.8,4-4v-32h-8v28h-48v-48h28v-8h-32l0,0c-2.2,0-4,1.8-4,4v56C14.8,83.3,16.6,85.1,18.8,85.1z"></path> <polygon fill="currentColor" points="45.7,48.7 51.3,54.3 77.2,28.5 77.2,37.2 85.2,37.2 85.2,14.9 62.8,14.9 62.8,22.9 71.5,22.9"></polygon></svg></div> <div class="last-updated"><span class="prefix">上次更新:</span> <span class="time">5/8/2020, 1:48:19 PM</span></div></footer> <!----> </main></div><div class="global-ui"></div></div>
+    <script src="/grender/assets/js/app.84430767.js" defer></script><script src="/grender/assets/js/3.bd51df29.js" defer></script><script src="/grender/assets/js/11.35c49f18.js" defer></script>
   </body>
 </html>

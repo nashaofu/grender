@@ -44,6 +44,9 @@ export default class GRender extends Events {
     this.canvas.addEventListener('mouseup', this.onMouseup)
     this.canvas.addEventListener('contextmenu', this.onContextMenu)
 
+    window.addEventListener('mousemove', this.onWindowMousemove)
+    window.addEventListener('mouseup', this.onWindowMouseup)
+
     this.resize()
   }
 
@@ -75,7 +78,7 @@ export default class GRender extends Events {
   clear (): this {
     this.shapes.forEach(shape => {
       shape.off()
-      removeDrag(shape)
+      removeDrag(shape, this)
       removeMouseOverOut(shape, this)
     })
     this.shapes = []
@@ -89,7 +92,7 @@ export default class GRender extends Events {
     // 清理事件监听
     this.shapes.forEach(shape => {
       shape.off()
-      removeDrag(shape)
+      removeDrag(shape, this)
       removeMouseOverOut(shape, this)
     })
     this.off()
@@ -102,6 +105,9 @@ export default class GRender extends Events {
     this.canvas.removeEventListener('contextmenu', this.onContextMenu)
 
     this.el.removeChild(this.canvas)
+
+    window.removeEventListener('mousemove', this.onWindowMousemove)
+    window.removeEventListener('mouseup', this.onWindowMouseup)
 
     return this
   }
@@ -120,7 +126,7 @@ export default class GRender extends Events {
 
     this.shapes.splice(i, 0, shape)
 
-    addDrag(shape)
+    addDrag(shape, this)
     addMouseOverOut(shape, this)
 
     this.refresh()
@@ -133,7 +139,7 @@ export default class GRender extends Events {
       this.shapes.splice(index, 1)
     }
 
-    removeDrag(shape)
+    removeDrag(shape, this)
     removeMouseOverOut(shape, this)
 
     this.refresh()
@@ -283,6 +289,16 @@ export default class GRender extends Events {
       }
     }
     this.emit('contextmenu', event)
+    return this
+  }
+
+  private onWindowMousemove = (e: MouseEvent): this => {
+    this.emit('windowMousemove', e)
+    return this
+  }
+
+  private onWindowMouseup = (e: MouseEvent): this => {
+    this.emit('windowMouseup', e)
     return this
   }
 }

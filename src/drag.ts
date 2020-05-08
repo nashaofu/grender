@@ -1,9 +1,16 @@
 import Shape from './shape'
+import GRender from './grender'
 import { ProxyMouseEvent } from './utils'
+
+interface Handlers {
+  mousedown: (e: ProxyMouseEvent) => void
+  windowMousemove: (e: MouseEvent) => void
+  windowMouseup: (e: MouseEvent) => void
+}
 
 interface EventHandler {
   shape: Shape<unknown>
-  handler(e: MouseEvent): void
+  handlers: Handlers
 }
 
 interface DragArgs {
@@ -13,35 +20,12 @@ interface DragArgs {
   y: number
 }
 
-interface InitListener {
-  (): void
-  inited?: boolean
-}
+const eventHandlers: EventHandler[] = []
 
-const MousemoveEventHandlers: EventHandler[] = []
-const MouseupEventHandlers: EventHandler[] = []
-
-/**
- * 便于SSR
- */
-const initListener: InitListener = function (): void {
-  initListener.inited = true
-  window.addEventListener('mousemove', (e: MouseEvent) => {
-    MousemoveEventHandlers.forEach(({ handler }) => handler(e))
-  })
-
-  window.addEventListener('mouseup', (e: MouseEvent) => {
-    MouseupEventHandlers.forEach(({ handler }) => handler(e))
-  })
-}
-
-export function addDrag<T> (shape: Shape<T>): void {
-  if (!initListener.inited) {
-    initListener()
-  }
+export function addDrag<T> (shape: Shape<T>, grender: GRender): void {
   let dragArgs: DragArgs | null = null
 
-  shape.on('mousedown', (e: ProxyMouseEvent) => {
+  const mousedown = (e: ProxyMouseEvent): void => {
     if (!shape.parent || e.target !== shape) return
     const [x, y] = shape.T
     const { clientX, clientY } = <MouseEvent>e.event
@@ -52,37 +36,48 @@ export function addDrag<T> (shape: Shape<T>): void {
       y
     }
     shape.emit('dragstart', dragArgs, e)
-  })
+  }
 
-  MousemoveEventHandlers.push({
-    shape,
-    handler: (e: MouseEvent): void => {
-      if (!shape.parent || !dragArgs) return
-      dragArgs.x = e.x - dragArgs.ox
-      dragArgs.y = e.y - dragArgs.oy
-      shape.emit('dragging', dragArgs, e)
-    }
-  })
+  const windowMousemove = (e: MouseEvent): void => {
+    if (!shape.parent || !dragArgs) return
+    dragArgs.x = e.x - dragArgs.ox
+    dragArgs.y = e.y - dragArgs.oy
+    shape.emit('dragging', dragArgs, e)
+  }
 
-  MouseupEventHandlers.push({
+  const windowMouseup = (e: MouseEvent): void => {
+    if (!shape.parent || !dragArgs) return
+    dragArgs.x = e.x - dragArgs.ox
+    dragArgs.y = e.y - dragArgs.oy
+    shape.emit('dragend', dragArgs, e)
+    dragArgs = null
+  }
+
+  shape.on('mousedown', mousedown)
+
+  grender.on('windowMousemove', windowMousemove)
+
+  grender.on('windowMouseup', windowMouseup)
+
+  eventHandlers.push({
     shape,
-    handler: (e: MouseEvent): void => {
-      if (!shape.parent || !dragArgs) return
-      dragArgs.x = e.x - dragArgs.ox
-      dragArgs.y = e.y - dragArgs.oy
-      shape.emit('dragend', dragArgs, e)
-      dragArgs = null
+    handlers: {
+      mousedown,
+      windowMousemove,
+      windowMouseup
     }
   })
 }
 
-export function removeDrag<T> (shape: Shape<T>): void {
-  const mousemoveIndex = MousemoveEventHandlers.findIndex(handler => handler.shape === shape)
-  const mouseupIndex = MouseupEventHandlers.findIndex(handler => handler.shape === shape)
-  if (mousemoveIndex !== -1) {
-    MousemoveEventHandlers.splice(mousemoveIndex, 1)
-  }
-  if (mouseupIndex !== -1) {
-    MouseupEventHandlers.splice(mouseupIndex, 1)
+export function removeDrag<T> (shape: Shape<T>, grender: GRender): void {
+  const index = eventHandlers.findIndex(handler => handler.shape === shape)
+  if (index !== -1) {
+    const eventHandler = eventHandlers[index]
+
+    shape.off('mousedown', eventHandler.handlers.mousedown)
+    grender.off('windowMousemove', eventHandler.handlers.windowMousemove)
+    grender.off('windowMouseup', eventHandler.handlers.windowMouseup)
+
+    eventHandlers.splice(index, 1)
   }
 }

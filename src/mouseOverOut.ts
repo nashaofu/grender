@@ -2,12 +2,12 @@ import Shape from './shape'
 import GRender from './grender'
 import { createProxyMouseEvent, ProxyMouseEvent } from './utils'
 
-interface Handlers {
+interface EventHandler {
   shape: Shape<unknown>
   handler: (e: ProxyMouseEvent) => void
 }
 
-const MousemoveHandlers: Handlers[] = []
+const eventHandlers: EventHandler[] = []
 
 export function addMouseOverOut<T> (shape: Shape<T>, grender: GRender): void {
   let isOver = false
@@ -36,17 +36,22 @@ export function addMouseOverOut<T> (shape: Shape<T>, grender: GRender): void {
       }
     }
   }
-  MousemoveHandlers.push({
+
+  grender.on('mousemove', handler)
+
+  eventHandlers.push({
     shape,
     handler
   })
-  grender.on('mousemove', handler)
 }
 
 export function removeMouseOverOut<T> (shape: Shape<T>, grender: GRender): void {
-  const index = MousemoveHandlers.findIndex(item => item.shape === shape)
+  const index = eventHandlers.findIndex(item => item.shape === shape)
   if (index !== -1) {
-    grender.off('mousemove', MousemoveHandlers[index].handler)
-    MousemoveHandlers.splice(index, 1)
+    const eventHandler = eventHandlers[index]
+
+    grender.off('mousemove', eventHandler.handler)
+
+    eventHandlers.splice(index, 1)
   }
 }

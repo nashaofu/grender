@@ -21,6 +21,10 @@ module.exports = {
       {
         text: 'API',
         link: '/api/'
+      },
+      {
+        text: '图形',
+        link: '/shape/'
       }
     ]
   },

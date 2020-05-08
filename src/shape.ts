@@ -1,7 +1,7 @@
 import Events from './events'
 import GRender from './grender'
-import { invert } from './matrix'
 import { ShapeBrush } from './shapeBrush'
+import { invert, multiply } from './matrix'
 
 export interface ShapeOpts {
   t?: number[]
@@ -31,8 +31,6 @@ export default abstract class Shape<S> extends Events {
 
   // shape自身的变换矩阵
   M = [1, 0, 0, 1, 0, 0]
-  // 逆矩阵
-  IM: number[] | null = [1, 0, 0, 1, 0, 0]
 
   constructor ({ t, s, r, z, brush }: ShapeOpts) {
     super()
@@ -52,6 +50,13 @@ export default abstract class Shape<S> extends Events {
     if (brush != null) {
       this.brush = brush
     }
+  }
+
+  /**
+   * 局部逆矩阵
+   */
+  get IM (): number[] | null {
+    return invert(this.M)
   }
 
   /**
@@ -84,7 +89,21 @@ export default abstract class Shape<S> extends Events {
    * 全局变换矩阵
    */
   get GM (): number[] {
-    return this.M
+    const m1 = this.parent?.GM
+    const m2 = this.M
+
+    if (!m1) {
+      return m2
+    } else {
+      return multiply(m1, m2)
+    }
+  }
+
+  /**
+   * 全局逆矩阵
+   */
+  get GIM (): number[] | null {
+    return invert(this.GM)
   }
 
   /**
@@ -124,8 +143,6 @@ export default abstract class Shape<S> extends Events {
     this.M[4] += tx - x
     this.M[5] += ty - y
 
-    this.IM = invert(this.M)
-
     this.refresh()
     return this
   }
@@ -146,8 +163,6 @@ export default abstract class Shape<S> extends Events {
     this.M[1] = b * sx
     this.M[2] = c * sy
     this.M[3] = d * sy
-
-    this.IM = invert(this.M)
 
     this.refresh()
     return this
@@ -171,8 +186,6 @@ export default abstract class Shape<S> extends Events {
     this.M[1] = -a * sin + b * cos
     this.M[2] = c * cos + d * sin
     this.M[3] = -c * sin + cos * d
-
-    this.IM = invert(this.M)
 
     this.refresh()
     return this

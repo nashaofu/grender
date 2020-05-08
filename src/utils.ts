@@ -1,14 +1,25 @@
 import Shape from './shape'
+import GRender from './grender'
+import { transform } from './matrix'
 
-export interface ProxyEvent {
-  event: Event
+export interface ProxyMouseEvent {
+  event: MouseEvent
   type: string
   target: Shape<unknown> | null
   stop: () => void
   prevent: () => void
+  x: number
+  y: number
 }
 
-export function createProxyEvent (type: string, event: Event, target: Shape<unknown> | null): ProxyEvent {
+export function createProxyMouseEvent (
+  type: string,
+  event: MouseEvent,
+  target: Shape<unknown> | null,
+  grender: GRender
+): ProxyMouseEvent {
+  const [x, y] = transform([event.offsetX, event.offsetY], grender.GM)
+
   const proxyEvent = {
     event,
     type,
@@ -20,7 +31,9 @@ export function createProxyEvent (type: string, event: Event, target: Shape<unkn
     prevent (): void {
       event.preventDefault()
       event.returnValue = false
-    }
+    },
+    x,
+    y
   }
   return proxyEvent
 }

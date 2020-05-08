@@ -1,7 +1,7 @@
 import Events from './events'
 import Shape from './shape'
-import { createProxyEvent } from './utils'
 import { addDrag, removeDrag } from './drag'
+import { createProxyMouseEvent } from './utils'
 import { defaultShapeBrushs, ShapeBrush } from './shapeBrush'
 import { addMouseOverOut, removeMouseOverOut } from './mouseOverOut'
 
@@ -25,8 +25,6 @@ export default class GRender extends Events {
     this.el.style.setProperty('-webkit-tap-highlight-color', 'transparent')
 
     this.canvas = document.createElement('canvas')
-    this.canvas.width = this.el.offsetWidth
-    this.canvas.height = this.el.offsetHeight
     this.canvas.style.setProperty('overflow', 'hidden')
     this.canvas.style.setProperty('user-select', 'none')
     this.canvas.style.setProperty('position', 'relative')
@@ -45,6 +43,16 @@ export default class GRender extends Events {
     this.canvas.addEventListener('mousemove', this.onMousemove)
     this.canvas.addEventListener('mouseup', this.onMouseup)
     this.canvas.addEventListener('contextmenu', this.onContextMenu)
+
+    this.resize()
+  }
+
+  get dpr (): number {
+    return window.devicePixelRatio || 1
+  }
+
+  get GM (): number[] {
+    return [this.dpr, 0, 0, this.dpr, 0, 0]
   }
 
   get width (): number {
@@ -56,8 +64,10 @@ export default class GRender extends Events {
   }
 
   resize (): this {
-    this.canvas.width = this.el.offsetWidth
-    this.canvas.height = this.el.offsetHeight
+    this.canvas.width = this.el.offsetWidth * this.dpr
+    this.canvas.height = this.el.offsetHeight * this.dpr
+    this.canvas.style.setProperty('width', `${this.el.offsetWidth}px`)
+    this.canvas.style.setProperty('height', `${this.el.offsetHeight}px`)
     this.refresh()
     return this
   }
@@ -140,6 +150,8 @@ export default class GRender extends Events {
   }
 
   render (): this {
+    const [ga, gb, gc, gd, ge, gf] = this.GM
+
     this.ctx.clearRect(0, 0, this.width, this.height)
 
     this.shapes.forEach(shape => {
@@ -157,18 +169,18 @@ export default class GRender extends Events {
       shape.render(this.ctx)
 
       // 恢复Transform
-      this.ctx.setTransform(1, 0, 0, 1, 0, 0)
+      this.ctx.setTransform(ga, gb, gc, gd, ge, gf)
     })
 
     return this
   }
 
   private onClick = (e: MouseEvent): this => {
-    const event = createProxyEvent('click', e, null)
+    const event = createProxyMouseEvent('click', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -180,11 +192,11 @@ export default class GRender extends Events {
   }
 
   private onDblclick = (e: MouseEvent): this => {
-    const event = createProxyEvent('dblclick', e, null)
+    const event = createProxyMouseEvent('dblclick', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -196,11 +208,11 @@ export default class GRender extends Events {
   }
 
   private onWheel = (e: WheelEvent): this => {
-    const event = createProxyEvent('wheel', e, null)
+    const event = createProxyMouseEvent('wheel', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -212,10 +224,10 @@ export default class GRender extends Events {
   }
 
   private onMousedown = (e: MouseEvent): this => {
-    const event = createProxyEvent('mousedown', e, null)
+    const event = createProxyMouseEvent('mousedown', e, null, this)
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -227,11 +239,11 @@ export default class GRender extends Events {
   }
 
   private onMousemove = (e: MouseEvent): this => {
-    const event = createProxyEvent('mousemove', e, null)
+    const event = createProxyMouseEvent('mousemove', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -243,11 +255,11 @@ export default class GRender extends Events {
   }
 
   private onMouseup = (e: MouseEvent): this => {
-    const event = createProxyEvent('mouseup', e, null)
+    const event = createProxyMouseEvent('mouseup', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }
@@ -259,11 +271,11 @@ export default class GRender extends Events {
   }
 
   private onContextMenu = (e: MouseEvent): this => {
-    const event = createProxyEvent('contextmenu', e, null)
+    const event = createProxyMouseEvent('contextmenu', e, null, this)
 
     for (let i = this.shapes.length - 1; i >= 0; i--) {
       const shape = this.shapes[i]
-      if (shape.contains(e.offsetX, e.offsetY)) {
+      if (shape.contains(event.x, event.y)) {
         if (!event.target) {
           event.target = shape
         }

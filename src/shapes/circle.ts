@@ -23,8 +23,8 @@ export default class Circle extends Shape<CircleShape> {
   contains (px: number, py: number): boolean {
     let { x, y, r } = this.shape
     const { lineWidth } = this.brush
-    if (this.IM) {
-      const p = transform([px, py], this.IM)
+    if (this.GIM) {
+      const p = transform([px, py], this.GIM)
       px = p[0]
       py = p[1]
     }

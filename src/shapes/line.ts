@@ -31,8 +31,8 @@ export default class Rect extends Shape<LineShape> {
       return false
     }
 
-    if (this.IM) {
-      const p = transform([px, py], this.IM)
+    if (this.GIM) {
+      const p = transform([px, py], this.GIM)
       px = p[0]
       py = p[1]
     }

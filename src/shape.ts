@@ -1,7 +1,7 @@
 import Events from './events'
 import GRender from './grender'
 import { ShapeBrush } from './shapeBrush'
-import { invert, multiply } from './matrix'
+import { invert, multiply, transform } from './matrix'
 
 export interface ShapeOpts {
   t?: number[]
@@ -9,6 +9,13 @@ export interface ShapeOpts {
   r?: number
   z?: number
   brush?: ShapeBrush
+}
+
+export interface Bounds {
+  x: number
+  y: number
+  width: number
+  height: number
 }
 
 export default abstract class Shape<S> extends Events {
@@ -22,6 +29,7 @@ export default abstract class Shape<S> extends Events {
 
   abstract shape: S
   abstract name: string
+  abstract bounds: Bounds
 
   // 画笔
   brush: ShapeBrush = {}
@@ -199,6 +207,22 @@ export default abstract class Shape<S> extends Events {
       this.parent.refresh()
     }
     return this
+  }
+
+  // 全局坐标系的bounds
+  toGloablBounds (): Array<number[]> {
+    const bounds = this.bounds
+    const [x1, y1] = transform([bounds.x, bounds.y], this.GM)
+    const [x2, y2] = transform([bounds.x + bounds.width, bounds.y], this.GM)
+    const [x3, y3] = transform([bounds.x + bounds.width, bounds.y + bounds.height], this.GM)
+    const [x4, y4] = transform([bounds.x, bounds.y + bounds.height], this.GM)
+
+    return [
+      [x1, y1],
+      [x2, y2],
+      [x3, y3],
+      [x4, y4]
+    ]
   }
 
   abstract contains(x: number, y: number): boolean

@@ -1,5 +1,5 @@
 import { transform } from '../matrix'
-import Shape, { ShapeOpts } from '../shape'
+import Shape, { ShapeOpts, Bounds } from '../shape'
 
 export interface EllipseShape {
   x: number
@@ -19,6 +19,20 @@ export default class Ellipse extends Shape<EllipseShape> {
   constructor (opts: EllipseOpts) {
     super(opts)
     this.shape = opts.shape
+  }
+
+  get bounds (): Bounds {
+    let { x, y, rx, ry } = this.shape
+    let { lineWidth } = this.brush
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+
+    x = x - rx - lineWidth
+    y = y - ry - lineWidth
+    const width = 2 * rx + lineWidth * 2
+    const height = 2 * ry + lineWidth * 2
+
+    return { x, y, width, height }
   }
 
   contains (px: number, py: number): boolean {

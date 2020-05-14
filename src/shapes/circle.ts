@@ -1,5 +1,5 @@
 import { transform } from '../matrix'
-import Shape, { ShapeOpts } from '../shape'
+import Shape, { ShapeOpts, Bounds } from '../shape'
 
 export interface CircleShape {
   x: number
@@ -18,6 +18,20 @@ export default class Circle extends Shape<CircleShape> {
   constructor (opts: CircleOpts) {
     super(opts)
     this.shape = opts.shape
+  }
+
+  get bounds (): Bounds {
+    let { x, y, r } = this.shape
+    let { lineWidth } = this.brush
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+
+    x = x - r - lineWidth
+    y = y - r - lineWidth
+    const width = 2 * r + lineWidth * 2
+    const height = 2 * r + lineWidth * 2
+
+    return { x, y, width, height }
   }
 
   contains (px: number, py: number): boolean {

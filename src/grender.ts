@@ -174,6 +174,7 @@ export default class GRender extends Events {
       this.ctx.beginPath()
       shape.render(this.ctx)
     })
+
     // 恢复Transform
     this.ctx.setTransform(ga, gb, gc, gd, ge, gf)
 

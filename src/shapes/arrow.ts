@@ -1,4 +1,4 @@
-import Shape, { ShapeOpts } from '../shape'
+import Shape, { ShapeOpts, Bounds } from '../shape'
 import { transform, rotate, invert } from '../matrix'
 
 export interface ArrowShape {
@@ -19,6 +19,20 @@ export default class Arrow extends Shape<ArrowShape> {
   constructor (opts: ArrowOpts) {
     super(opts)
     this.shape = opts.shape
+  }
+
+  get bounds (): Bounds {
+    const { x1, y1, x2, y2 } = this.shape
+    let { lineWidth } = this.brush
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+
+    const x = Math.min(x1, x2) - lineWidth - 1.6 * lineWidth
+    const y = Math.min(y1, y2)
+    const width = Math.abs(x1 - x2) + lineWidth * 2 + 3.2 * lineWidth
+    const height = Math.abs(y1 - y2)
+
+    return { x, y, width, height }
   }
 
   contains (px: number, py: number): boolean {

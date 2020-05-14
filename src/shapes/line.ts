@@ -1,4 +1,4 @@
-import Shape, { ShapeOpts } from '../shape'
+import Shape, { ShapeOpts, Bounds } from '../shape'
 import { transform, rotate, invert } from '../matrix'
 
 export interface LineShape {
@@ -12,13 +12,27 @@ export interface LineOpts extends ShapeOpts {
   shape: LineShape
 }
 
-export default class Rect extends Shape<LineShape> {
+export default class Line extends Shape<LineShape> {
   name = 'Line'
   shape: LineShape
 
   constructor (opts: LineOpts) {
     super(opts)
     this.shape = opts.shape
+  }
+
+  get bounds (): Bounds {
+    const { x1, y1, x2, y2 } = this.shape
+    let { lineWidth } = this.brush
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+
+    const x = Math.min(x1, x2) - lineWidth
+    const y = Math.min(y1, y2) - lineWidth
+    const width = Math.abs(x1 - x2) + lineWidth * 2
+    const height = Math.abs(y1 - y2) + lineWidth * 2
+
+    return { x, y, width, height }
   }
 
   contains (px: number, py: number): boolean {
@@ -38,10 +52,10 @@ export default class Rect extends Shape<LineShape> {
     }
 
     if (
-      px < Math.min(x1 - lw, x2 - lw) ||
-      py < Math.min(y1 - lw, y2 - lw) ||
-      px > Math.max(x1 + lw, x2 + lw) ||
-      py > Math.max(y1 + lw, y2 + lw)
+      px < Math.min(x1, x2) - lw ||
+      py < Math.min(y1, y2) - lw ||
+      px > Math.max(x1, x2) + lw ||
+      py > Math.max(y1, y2) + lw
     ) {
       return false
     }

@@ -1,4 +1,5 @@
-import Shape, { ShapeOpts, Bounds } from '../shape'
+import Bounds from '../bounds'
+import Shape, { ShapeOpts } from '../shape'
 import { transform, rotate, invert } from '../matrix'
 
 export interface LineShape {
@@ -32,10 +33,14 @@ export default class Line extends Shape<LineShape> {
     const width = Math.abs(x1 - x2) + lineWidth * 2
     const height = Math.abs(y1 - y2) + lineWidth * 2
 
-    return { x, y, width, height }
+    return new Bounds(this, x, y, width, height)
   }
 
   contains (px: number, py: number): boolean {
+    if (!this.bounds.contains(px, py)) {
+      return false
+    }
+
     const { x1, y1, x2, y2 } = this.shape
     const { lineWidth } = this.brush
 

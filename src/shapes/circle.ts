@@ -1,5 +1,6 @@
+import Bounds from '../bounds'
 import { transform } from '../matrix'
-import Shape, { ShapeOpts, Bounds } from '../shape'
+import Shape, { ShapeOpts } from '../shape'
 
 export interface CircleShape {
   x: number
@@ -31,10 +32,14 @@ export default class Circle extends Shape<CircleShape> {
     const width = 2 * r + lineWidth * 2
     const height = 2 * r + lineWidth * 2
 
-    return { x, y, width, height }
+    return new Bounds(this, x, y, width, height)
   }
 
   contains (px: number, py: number): boolean {
+    if (!this.bounds.contains(px, py)) {
+      return false
+    }
+
     let { x, y, r } = this.shape
     const { lineWidth } = this.brush
     if (this.GIM) {

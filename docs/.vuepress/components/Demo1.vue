@@ -1,5 +1,5 @@
 <template>
-  <div class="demo1" style="height: 180px"></div>
+  <div class="demo1"</div>
 </template>
 
 <script>
@@ -72,3 +72,8 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.demo1
+  height 180px
+</style>

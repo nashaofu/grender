@@ -1,7 +1,7 @@
 <template>
-  <div class="demo4" style="border: 2px solid #000;">
+  <div class="demo4">
     <div>当前触发事件：{{ event }}</div>
-    <div class="demo4-canvas" style="height: 240px;" ref="canvas"></div>
+    <div class="demo4-canvas" ref="canvas"></div>
   </div>
 </template>
 
@@ -108,3 +108,10 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.demo4
+  border 2px solid #000
+  &-canvas
+    height 240px
+</style>

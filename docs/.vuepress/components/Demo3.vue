@@ -6,14 +6,14 @@
     <button @click="rotate(rect)">旋转30°</button>
     <button @click="scale(rect, 1.2)">放大1.2倍</button>
     <button @click="scale(rect, 1 / 1.2)">缩小1.2倍</button>
-    <div class="demo3-canvas" style="height: 300px" ref="rect"></div>
+    <div class="demo3-canvas" ref="rect"></div>
     <h5>椭圆变换</h5>
     <button @click="translateX(ellipse)">x + 10</button>
     <button @click="translateY(ellipse)">y + 10</button>
     <button @click="rotate(ellipse)">旋转30°</button>
     <button @click="scale(ellipse, 1.2)">放大1.2倍</button>
     <button @click="scale(ellipse, 1 / 1.2)">缩小1.2倍</button>
-    <div class="demo3-canvas" style="height: 300px" ref="ellipse"></div>
+    <div class="demo3-canvas" ref="ellipse"></div>
   </div>
 </template>
 
@@ -86,3 +86,8 @@ export default {
   }
 }
 </script>
+
+<style lang="stylus">
+.demo3-canvas
+  height 300px
+</style>

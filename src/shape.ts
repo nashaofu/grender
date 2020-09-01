@@ -5,6 +5,7 @@ import { ShapeBrush } from './shapeBrush'
 import { invert, multiply } from './matrix'
 
 export interface ShapeOpts {
+  origin?: number[]
   t?: number[]
   s?: number[]
   r?: number
@@ -33,10 +34,15 @@ export default abstract class Shape<S> extends Events {
 
   // shape自身的变换矩阵
   M = [1, 0, 0, 1, 0, 0]
+  // 矩阵变换中心
+  origin = [0, 0]
 
-  constructor ({ t, s, r, z, brush }: ShapeOpts) {
+  constructor ({ origin, t, s, r, z, brush }: ShapeOpts) {
     super()
     this.uid = Shape.uid++
+    if (Array.isArray(origin)) {
+      this.origin = origin
+    }
     if (Array.isArray(t)) {
       this.translate(t[0], t[1])
     }
@@ -155,16 +161,14 @@ export default abstract class Shape<S> extends Events {
    * @param {number} sy
    */
   scale (sx: number, sy: number): this {
+    const [x, y] = this.origin
     const [scaleX, scaleY] = this.S
-    const [a, b, c, d] = this.M
-
     sx /= scaleX
     sy /= scaleY
 
-    this.M[0] = a * sx
-    this.M[1] = b * sx
-    this.M[2] = c * sy
-    this.M[3] = d * sy
+    let M = multiply([1, 0, 0, 1, x, y], [sx, 0, 0, sy, 0, 0])
+    M = multiply(M, [1, 0, 0, 1, -x, -y])
+    this.M = multiply(this.M, M)
 
     this.refresh()
     return this
@@ -175,19 +179,14 @@ export default abstract class Shape<S> extends Events {
    * @param {number} r
    */
   rotate (r: number): this {
+    const [x, y] = this.origin
     const radian = ((r - this.R) / 180) * Math.PI
     const sin = Math.sin(radian)
     const cos = Math.cos(radian)
-    const [a, b, c, d] = this.M
 
-    /**
-     * 相当于[cos, -sin, sin, cos, 0, 0] 乘 this.m
-     * x,y坐标不影响
-     */
-    this.M[0] = a * cos + b * sin
-    this.M[1] = -a * sin + b * cos
-    this.M[2] = c * cos + d * sin
-    this.M[3] = -c * sin + cos * d
+    let M = multiply([1, 0, 0, 1, x, y], [cos, sin, -sin, cos, 0, 0])
+    M = multiply(M, [1, 0, 0, 1, -x, -y])
+    this.M = multiply(this.M, M)
 
     this.refresh()
     return this

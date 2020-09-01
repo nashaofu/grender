@@ -25,6 +25,7 @@ export default {
   mounted() {
     this.grender1 = new GRender(this.$refs.rect)
     this.rect = new Rect({
+      origin: [40, 20],
       brush: {
         fillStyle: 'red',
         strokeStyle: 'red'
@@ -42,6 +43,7 @@ export default {
     this.grender2 = new GRender(this.$refs.ellipse)
 
     this.ellipse = new Ellipse({
+      origin: [100, 100],
       brush: {
         fillStyle: 'red',
         strokeStyle: 'red'
@@ -53,7 +55,6 @@ export default {
         ry: 30
       }
     })
-
     this.grender2.add(this.ellipse)
     window.addEventListener('resize', this.resize)
   },

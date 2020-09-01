@@ -81,6 +81,8 @@ abstract class Shape<S> extends Events {
 
   // shape自身的变换矩阵
   M = [1, 0, 0, 1, 0, 0]
+  // 矩阵变换中心
+  origin = [0, 0]
 
   /**
    * 局部逆矩阵

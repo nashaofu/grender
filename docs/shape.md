@@ -24,6 +24,8 @@ interface ShapeBrush {
 
 // 形状
 interface ShapeOpts {
+  // 矩阵变换中心,默认为[0,0]
+  origin?: number[]
   t?: number[]
   s?: number[]
   r?: number

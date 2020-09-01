@@ -35,7 +35,7 @@ export default class Bounds {
     const GIM = this.shape.GIM
 
     if (GIM) {
-      ;[x, y] = transform([x, y], GIM)
+      [x, y] = transform([x, y], GIM)
     }
 
     // 判断是否在矩形区域内

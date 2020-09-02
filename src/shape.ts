@@ -166,9 +166,7 @@ export default abstract class Shape<S> extends Events {
     sx /= scaleX
     sy /= scaleY
 
-    let M = multiply([1, 0, 0, 1, x, y], [sx, 0, 0, sy, 0, 0])
-    M = multiply(M, [1, 0, 0, 1, -x, -y])
-    this.M = multiply(this.M, M)
+    this.M = multiply(this.M, [sx, 0, 0, sy, (1 - sx) * x, (1 - sy) * y])
 
     this.refresh()
     return this
@@ -184,9 +182,7 @@ export default abstract class Shape<S> extends Events {
     const sin = Math.sin(radian)
     const cos = Math.cos(radian)
 
-    let M = multiply([1, 0, 0, 1, x, y], [cos, sin, -sin, cos, 0, 0])
-    M = multiply(M, [1, 0, 0, 1, -x, -y])
-    this.M = multiply(this.M, M)
+    this.M = multiply(this.M, [cos, sin, -sin, cos, (1 - cos) * x + sin * y, -sin * x + (1 - cos) * y])
 
     this.refresh()
     return this

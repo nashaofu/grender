@@ -165,10 +165,10 @@ export default class GRender extends Events {
 
       // 设置Transform
       this.ctx.setTransform(a, b, c, d, e, f)
-      ;(<Array<keyof ShapeBrush>>Object.keys(defaultShapeBrushs)).forEach(key => {
+      ;(Object.keys(defaultShapeBrushs) as Array<keyof ShapeBrush>).forEach(key => {
         const shapeBrush = shape.brush[key]
         const defaultValue = defaultShapeBrushs[key]
-        this.ctx[key] = <never>(shapeBrush == null ? defaultValue : shapeBrush)
+        this.ctx[key] = (shapeBrush == null ? defaultValue : shapeBrush) as never
       })
 
       this.ctx.beginPath()

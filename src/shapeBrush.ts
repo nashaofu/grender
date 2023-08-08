@@ -32,5 +32,5 @@ export const defaultShapeBrushs = {
   shadowOffsetY: 0,
   strokeStyle: '#000000',
   textAlign: 'center',
-  textBaseline: 'middle'
-}
+  textBaseline: 'middle',
+};

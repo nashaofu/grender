@@ -108,3 +108,4 @@ dist
 .env.*.local
 
 /lib
+cache

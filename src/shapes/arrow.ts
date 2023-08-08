@@ -1,6 +1,6 @@
-import Bounds from '../bounds'
-import Shape, { ShapeOpts } from '../shape'
-import { transform, rotate, invert } from '../matrix'
+import Bounds from '../bounds';
+import Shape, { ShapeOpts } from '../shape';
+import { transform, rotate, invert } from '../matrix';
 
 export interface ArrowShape {
   x1: number
@@ -14,116 +14,122 @@ export interface ArrowOpts extends ShapeOpts {
 }
 
 export default class Arrow extends Shape<ArrowShape> {
-  name = 'Arrow'
-  shape: ArrowShape
+  name = 'Arrow';
 
-  constructor (opts: ArrowOpts) {
-    super(opts)
-    this.shape = opts.shape
+  shape: ArrowShape;
+
+  constructor(opts: ArrowOpts) {
+    super(opts);
+    this.shape = opts.shape;
   }
 
-  get bounds (): Bounds {
-    const { x1, y1, x2, y2 } = this.shape
-    let { lineWidth } = this.brush
-    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
-    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+  get bounds(): Bounds {
+    const {
+      x1, y1, x2, y2,
+    } = this.shape;
+    let { lineWidth } = this.brush;
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0;
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2;
 
-    const x = Math.min(x1, x2) - lineWidth - 1.6 * lineWidth
-    const y = Math.min(y1, y2)
-    const width = Math.abs(x1 - x2) + lineWidth * 2 + 3.2 * lineWidth
-    const height = Math.abs(y1 - y2)
+    const x = Math.min(x1, x2) - lineWidth - 1.6 * lineWidth;
+    const y = Math.min(y1, y2);
+    const width = Math.abs(x1 - x2) + lineWidth * 2 + 3.2 * lineWidth;
+    const height = Math.abs(y1 - y2);
 
-    return new Bounds(this, x, y, width, height)
+    return new Bounds(this, x, y, width, height);
   }
 
-  contains (px: number, py: number): boolean {
+  contains(px: number, py: number): boolean {
     if (!this.bounds.contains(px, py)) {
-      return false
+      return false;
     }
 
-    const { x1, y1, x2, y2 } = this.shape
-    const { lineWidth } = this.brush
+    const {
+      x1, y1, x2, y2,
+    } = this.shape;
+    const { lineWidth } = this.brush;
 
-    const lw = typeof lineWidth === 'number' ? lineWidth / 2 : 0.5
+    const lw = typeof lineWidth === 'number' ? lineWidth / 2 : 0.5;
 
     if (lw <= 0) {
-      return false
+      return false;
     }
 
     if (this.GIM) {
-      const p = transform([px, py], this.GIM)
-      px = p[0]
-      py = p[1]
+      const p = transform([px, py], this.GIM);
+      px = p[0];
+      py = p[1];
     }
 
     if (
-      px < Math.min(x1 - lw, x2 - lw) ||
-      py < Math.min(y1 - lw, y2 - lw) ||
-      px > Math.max(x1 + lw, x2 + lw) ||
-      py > Math.max(y1 + lw, y2 + lw)
+      px < Math.min(x1 - lw, x2 - lw)
+      || py < Math.min(y1 - lw, y2 - lw)
+      || px > Math.max(x1 + lw, x2 + lw)
+      || py > Math.max(y1 + lw, y2 + lw)
     ) {
-      return false
+      return false;
     }
 
     // 直线与x轴的夹角
-    const radian = -Math.atan2(y2 - y1, x2 - x1)
+    const radian = -Math.atan2(y2 - y1, x2 - x1);
 
-    const m = invert(rotate(radian, this.M))
+    const m = invert(rotate(radian, this.M));
     /**
      * 把直线转换为矩形
      */
     if (m) {
-      const p1 = transform([x1, y1], m)
-      const p2 = transform([x2, y2], m)
-      const p = transform([px, py], m)
-      const x = Math.min(p1[0], p2[0])
-      const y = Math.min(p1[1], p2[1]) - lw
-      const width = Math.abs(p2[0] - p1[0])
-      const height = Math.abs(p2[1] - p1[1]) + lw * 2
+      const p1 = transform([x1, y1], m);
+      const p2 = transform([x2, y2], m);
+      const p = transform([px, py], m);
+      const x = Math.min(p1[0], p2[0]);
+      const y = Math.min(p1[1], p2[1]) - lw;
+      const width = Math.abs(p2[0] - p1[0]);
+      const height = Math.abs(p2[1] - p1[1]) + lw * 2;
       // 判断是否在矩形内
-      return x <= p[0] && x + width >= p[0] && y <= p[1] && y + height >= p[1]
-    } else {
-      return false
+      return x <= p[0] && x + width >= p[0] && y <= p[1] && y + height >= p[1];
     }
+    return false;
   }
 
-  render (ctx: CanvasRenderingContext2D): this {
-    const { x1, y1, x2, y2 } = this.shape
-    const { lineWidth } = this.brush
+  render(ctx: CanvasRenderingContext2D): this {
+    const {
+      x1, y1, x2, y2,
+    } = this.shape;
+    const { lineWidth } = this.brush;
 
-    const lw = typeof lineWidth === 'number' ? lineWidth : 1
+    const lw = typeof lineWidth === 'number' ? lineWidth : 1;
 
-    const shouldStroke = lw !== 0
+    const shouldStroke = lw !== 0;
 
-    const radian = Math.atan2(y2 - y1, x2 - x1)
-    const sin = Math.sin(radian)
-    const cos = Math.cos(radian)
+    const radian = Math.atan2(y2 - y1, x2 - x1);
+    const sin = Math.sin(radian);
+    const cos = Math.cos(radian);
 
-    const h = lw * 2
-    const a = lw * 0.8
-    const x3 = x2 - h * cos
-    const y3 = y2 - h * sin
-    const x4 = x3 - a * sin
-    const y4 = y3 + a * cos
-    const x5 = x3 + a * sin
-    const y5 = y3 - a * cos
+    const h = lw * 2;
+    const a = lw * 0.8;
+    const x3 = x2 - h * cos;
+    const y3 = y2 - h * sin;
+    const x4 = x3 - a * sin;
+    const y4 = y3 + a * cos;
+    const x5 = x3 + a * sin;
+    const y5 = y3 - a * cos;
 
-    ctx.fillStyle = ctx.strokeStyle
+    ctx.fillStyle = ctx.strokeStyle;
 
-    ctx.moveTo(x1, y1)
-    ctx.lineTo(x3, y3)
-    ctx.moveTo(x3, y3)
-    ctx.lineTo(x4, y4)
-    ctx.lineTo(x2, y2)
-    ctx.lineTo(x5, y5)
-    ctx.lineTo(x4, y4)
-    ctx.closePath()
+    ctx.moveTo(x1, y1);
+    ctx.lineTo(x3, y3);
+    ctx.moveTo(x3, y3);
+    ctx.lineTo(x4, y4);
+    ctx.lineTo(x2, y2);
+    ctx.lineTo(x5, y5);
+    ctx.lineTo(x4, y4);
+    ctx.closePath();
 
     if (shouldStroke) {
-      ctx.stroke()
-      ctx.fill()
+      ctx.stroke();
+      ctx.fill();
     }
 
-    return this
+    return this;
   }
 }

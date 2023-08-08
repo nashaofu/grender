@@ -7,7 +7,7 @@
 <Demo1 />
 
 ::: details 点击查看代码
-<<< ./docs/.vuepress/components/Demo1.vue
+<<< ./.vitepress/components/Demo1.vue
 :::
 
 ## 图形样式
@@ -22,7 +22,7 @@
 :::
 
 ::: details 点击查看代码
-<<< ./docs/.vuepress/components/Demo2.vue
+<<< ./.vitepress/components/Demo2.vue
 :::
 
 ## 图形变换
@@ -36,7 +36,7 @@
 :::
 
 ::: details 点击查看代码
-<<< ./docs/.vuepress/components/Demo3.vue
+<<< ./.vitepress/components/Demo3.vue
 :::
 
 ## 鼠标事件
@@ -46,5 +46,5 @@
 <Demo4 />
 
 ::: details 点击查看代码
-<<< ./docs/.vuepress/components/Demo4.vue
+<<< ./.vitepress/components/Demo4.vue
 :::

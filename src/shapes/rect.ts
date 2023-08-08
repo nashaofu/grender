@@ -1,5 +1,5 @@
-import Bounds from '../bounds'
-import Shape, { ShapeOpts } from '../shape'
+import Bounds from '../bounds';
+import Shape, { ShapeOpts } from '../shape';
 
 export interface RectShape {
   x: number
@@ -13,47 +13,52 @@ export interface RectOpts extends ShapeOpts {
 }
 
 export default class Rect extends Shape<RectShape> {
-  name = 'Rect'
-  shape: RectShape
+  name = 'Rect';
 
-  constructor (opts: RectOpts) {
-    super(opts)
-    this.shape = opts.shape
+  shape: RectShape;
+
+  constructor(opts: RectOpts) {
+    super(opts);
+    this.shape = opts.shape;
   }
 
-  get bounds (): Bounds {
-    let { x, y, width, height } = this.shape
-    let { lineWidth } = this.brush
-    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0
-    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2
+  get bounds(): Bounds {
+    let {
+      x, y, width, height,
+    } = this.shape;
+    let { lineWidth } = this.brush;
+    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0;
+    lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2;
 
-    x = x - lineWidth
-    y = y - lineWidth
-    width = width + lineWidth * 2
-    height = height + lineWidth * 2
+    x -= lineWidth;
+    y -= lineWidth;
+    width += lineWidth * 2;
+    height += lineWidth * 2;
 
-    return new Bounds(this, x, y, width, height)
+    return new Bounds(this, x, y, width, height);
   }
 
-  contains (x: number, y: number): boolean {
-    return this.bounds.contains(x, y)
+  contains(x: number, y: number): boolean {
+    return this.bounds.contains(x, y);
   }
 
-  render (ctx: CanvasRenderingContext2D): this {
-    const { x, y, width, height } = this.shape
-    const { lineWidth, fillStyle } = this.brush
+  render(ctx: CanvasRenderingContext2D): this {
+    const {
+      x, y, width, height,
+    } = this.shape;
+    const { lineWidth, fillStyle } = this.brush;
 
-    ctx.rect(x, y, width, height)
-    ctx.closePath()
+    ctx.rect(x, y, width, height);
+    ctx.closePath();
 
     if (lineWidth !== 0) {
-      ctx.stroke()
+      ctx.stroke();
     }
 
     if (fillStyle) {
-      ctx.fill()
+      ctx.fill();
     }
 
-    return this
+    return this;
   }
 }

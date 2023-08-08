@@ -1,10 +1,10 @@
-import GRender from './grender'
-import Shape, { ShapeOpts } from './shape'
-import Line, { LineOpts, LineShape } from './shapes/line'
-import Rect, { RectOpts, RectShape } from './shapes/rect'
-import Arrow, { ArrowOpts, ArrowShape } from './shapes/arrow'
-import Circle, { CircleOpts, CircleShape } from './shapes/circle'
-import Ellipse, { EllipseOpts, EllipseShape } from './shapes/ellipse'
+import GRender from './grender';
+import Shape, { ShapeOpts } from './shape';
+import Line, { LineOpts, LineShape } from './shapes/line';
+import Rect, { RectOpts, RectShape } from './shapes/rect';
+import Arrow, { ArrowOpts, ArrowShape } from './shapes/arrow';
+import Circle, { CircleOpts, CircleShape } from './shapes/circle';
+import Ellipse, { EllipseOpts, EllipseShape } from './shapes/ellipse';
 
 export {
   Shape,
@@ -25,5 +25,5 @@ export {
   EllipseOpts,
   EllipseShape,
   GRender,
-  GRender as default
-}
+  GRender as default,
+};

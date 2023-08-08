@@ -1,4 +1,4 @@
-const EVENTS = Symbol('Events')
+const EVENTS = Symbol('Events');
 
 export interface Handler {
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
@@ -15,27 +15,27 @@ export interface EventsHandlers {
 }
 
 export default class Events {
-  readonly [EVENTS]: EventsHandlers = {}
+  readonly [EVENTS]: EventsHandlers = {};
 
   /**
    * 绑定事件
    * @param event
    * @param handler
    */
-  on (event: string, handler: Handler): this | never {
+  on(event: string, handler: Handler): this | never {
     if (!this[EVENTS][event]) {
-      this[EVENTS][event] = []
+      this[EVENTS][event] = [];
     }
 
     if (typeof handler !== 'function') {
-      throw new TypeError('argument is not function')
+      throw new TypeError('argument is not function');
     }
 
     this[EVENTS][event].push({
       once: false,
-      handler
-    })
-    return this
+      handler,
+    });
+    return this;
   }
 
   /**
@@ -43,20 +43,20 @@ export default class Events {
    * @param event
    * @param handler
    */
-  once (event: string, handler: Handler): this | never {
+  once(event: string, handler: Handler): this | never {
     if (!this[EVENTS][event]) {
-      this[EVENTS][event] = []
+      this[EVENTS][event] = [];
     }
 
     if (typeof handler !== 'function') {
-      throw new TypeError('argument is not function')
+      throw new TypeError('argument is not function');
     }
 
     this[EVENTS][event].push({
       once: true,
-      handler
-    })
-    return this
+      handler,
+    });
+    return this;
   }
 
   /**
@@ -66,25 +66,25 @@ export default class Events {
    * @param event
    * @param handler
    */
-  off (event?: string, handler?: Handler): this | never {
+  off(event?: string, handler?: Handler): this | never {
     if (!event) {
-      Object.keys(this[EVENTS]).forEach(key => {
-        delete this[EVENTS][key]
-      })
+      Object.keys(this[EVENTS]).forEach((key) => {
+        delete this[EVENTS][key];
+      });
     } else {
-      const handlers = this[EVENTS][event] || []
+      const handlers = this[EVENTS][event] || [];
 
       // handler不存在，则移除该事件的所有监听
       if (!handler) {
-        this[EVENTS][event] = []
+        this[EVENTS][event] = [];
       } else {
-        const index = handlers.findIndex((h: EventsHandler) => h.handler === handler)
+        const index = handlers.findIndex((h: EventsHandler) => h.handler === handler);
         if (index > -1) {
-          handlers.splice(index, 1)
+          handlers.splice(index, 1);
         }
       }
     }
-    return this
+    return this;
   }
 
   /**
@@ -92,15 +92,15 @@ export default class Events {
    * @param event
    * @param args
    */
-  emit (event: string, ...args: unknown[]): this {
-    const handlers = this[EVENTS][event] || []
+  emit(event: string, ...args: unknown[]): this {
+    const handlers = this[EVENTS][event] || [];
 
     handlers.forEach((h: EventsHandler) => {
       if (h.once) {
-        this.off(event, h.handler)
+        this.off(event, h.handler);
       }
-      h.handler.call(this, ...args)
-    })
-    return this
+      h.handler.call(this, ...args);
+    });
+    return this;
   }
 }

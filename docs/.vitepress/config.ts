@@ -1,3 +1,4 @@
+import path from "path";
 import { defineConfig } from "vitepress";
 
 // https://vitepress.dev/reference/site-config
@@ -26,6 +27,13 @@ export default defineConfig({
     search: { provider: "local" },
     editLink: {
       pattern: "https://github.com/nashaofu/grender/edit/master/docs/:path",
+    },
+  },
+  vite: {
+    resolve: {
+      alias: {
+        grender: path.join(__dirname, "../.."),
+      },
     },
   },
 });

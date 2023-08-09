@@ -18,7 +18,7 @@
     "docs:preview": "vitepress preview docs",
     "dev": "rollup --config rollup.config.ts --configPlugin typescript --watch",
     "build": "npm run lint && npm run clean && npm run compile",
-    "compile": "tsc && rollup --config rollup.config.ts --configPlugin typescript",
+    "compile": "tsc --project tsconfig.build.json && rollup --config rollup.config.ts --configPlugin typescript",
     "lint": "eslint src --ext .ts --fix",
     "clean": "rimraf lib dist"
   },

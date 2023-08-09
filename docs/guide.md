@@ -4,6 +4,13 @@
 
 初始化画布，并添加图形
 
+<script setup>
+import Demo1 from './.vitepress/components/Demo1.vue'
+import Demo2 from './.vitepress/components/Demo2.vue'
+import Demo3 from './.vitepress/components/Demo3.vue'
+import Demo4 from './.vitepress/components/Demo4.vue'
+</script>
+
 <Demo1 />
 
 ::: details 点击查看代码

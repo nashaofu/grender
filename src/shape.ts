@@ -5,12 +5,12 @@ import { ShapeBrush } from './shapeBrush';
 import { invert, multiply } from './matrix';
 
 export interface ShapeOpts {
-  origin?: number[]
-  t?: number[]
-  s?: number[]
-  r?: number
-  z?: number
-  brush?: ShapeBrush
+  origin?: number[];
+  t?: number[];
+  s?: number[];
+  r?: number;
+  z?: number;
+  brush?: ShapeBrush;
 }
 
 export default abstract class Shape<S> extends Events {
@@ -41,8 +41,8 @@ export default abstract class Shape<S> extends Events {
   origin = [0, 0];
 
   constructor({
-    origin, t, s, r, z, brush,
-  }: ShapeOpts) {
+ origin, t, s, r, z, brush 
+}: ShapeOpts) {
     super();
     this.uid = Shape.uid++;
     if (Array.isArray(origin)) {
@@ -186,7 +186,14 @@ export default abstract class Shape<S> extends Events {
     const sin = Math.sin(radian);
     const cos = Math.cos(radian);
 
-    this.M = multiply(this.M, [cos, sin, -sin, cos, (1 - cos) * x + sin * y, -sin * x + (1 - cos) * y]);
+    this.M = multiply(this.M, [
+      cos,
+      sin,
+      -sin,
+      cos,
+      (1 - cos) * x + sin * y,
+      -sin * x + (1 - cos) * y,
+    ]);
 
     this.refresh();
     return this;

@@ -54,7 +54,7 @@ export default class GRender extends Events {
     this.resize();
   }
 
-  // eslint-disable-next-line class-methods-use-this
+   
   get dpr(): number {
     return window.devicePixelRatio || 1;
   }
@@ -118,12 +118,12 @@ export default class GRender extends Events {
   }
 
   add<T>(shape: Shape<T>): this {
-    // eslint-disable-next-line no-param-reassign
+     
     shape.parent = this;
     let i = this.shapes.length - 1;
 
     // 按z值顺序插入
-    // eslint-disable-next-line no-plusplus
+     
     for (; i >= 0; i--) {
       if (this.shapes[i].z <= shape.z) {
         i += 1;

@@ -1,5 +1,5 @@
 <script setup lang="ts">
-import GRender, { Rect, Line, Arrow, Circle, Ellipse } from "grender";
+import GRender, { Rect, Line, Arrow, Circle, Ellipse, Polygon } from "grender";
 import { ref, onMounted, onUnmounted } from "vue";
 
 let grender: GRender | undefined;
@@ -57,11 +57,25 @@ onMounted(() => {
     },
   });
 
+  const polygon = new Polygon({
+    shape: {
+      points: [
+        [x - 130, 40],
+        [x - 110, 10],
+        [x - 80, 10],
+        [x - 60, 40],
+        [x - 80, 70],
+        [x - 110, 70],
+      ],
+    },
+  });
+
   grender.add(rect);
   grender.add(line);
   grender.add(arrow);
   grender.add(circle);
   grender.add(ellipse);
+  grender.add(polygon);
   window.addEventListener("resize", resize);
 });
 

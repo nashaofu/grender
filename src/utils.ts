@@ -26,12 +26,12 @@ export function createProxyMouseEvent(
     target,
     stop(): void {
       event.stopPropagation();
-      // eslint-disable-next-line no-param-reassign
+       
       event.cancelBubble = true;
     },
     prevent(): void {
       event.preventDefault();
-      // eslint-disable-next-line no-param-reassign
+       
       event.returnValue = false;
     },
     x,

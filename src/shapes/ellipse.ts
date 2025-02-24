@@ -1,20 +1,20 @@
-import Bounds from '../bounds';
-import { transform } from '../matrix';
-import Shape, { ShapeOpts } from '../shape';
+import Bounds from "../bounds";
+import { transform } from "../matrix";
+import Shape, { ShapeOpts } from "../shape";
 
 export interface EllipseShape {
-  x: number
-  y: number
-  rx: number
-  ry: number
+  x: number;
+  y: number;
+  rx: number;
+  ry: number;
 }
 
 export interface EllipseOpts extends ShapeOpts {
-  shape: EllipseShape
+  shape: EllipseShape;
 }
 
 export default class Ellipse extends Shape<EllipseShape> {
-  name = 'Ellipse';
+  name = "Ellipse";
 
   shape: EllipseShape;
 
@@ -24,11 +24,10 @@ export default class Ellipse extends Shape<EllipseShape> {
   }
 
   get bounds(): Bounds {
-    let {
-      x, y, rx, ry,
-    } = this.shape;
+    let { x, y } = this.shape;
+    const { rx, ry } = this.shape;
     let { lineWidth } = this.brush;
-    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0;
+    lineWidth = typeof lineWidth === "number" ? lineWidth : 0;
     lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2;
 
     x = x - rx - lineWidth;
@@ -44,9 +43,8 @@ export default class Ellipse extends Shape<EllipseShape> {
       return false;
     }
 
-    let {
-      x, y, rx, ry,
-    } = this.shape;
+    const { x, y } = this.shape;
+    let { rx, ry } = this.shape;
     const { lineWidth } = this.brush;
 
     if (this.GIM) {
@@ -55,7 +53,7 @@ export default class Ellipse extends Shape<EllipseShape> {
       py = p[1];
     }
 
-    if (typeof lineWidth === 'number') {
+    if (typeof lineWidth === "number") {
       const lw = lineWidth / 2;
       rx += lw;
       ry += lw;
@@ -70,9 +68,7 @@ export default class Ellipse extends Shape<EllipseShape> {
   }
 
   render(ctx: CanvasRenderingContext2D): this {
-    const {
-      x, y, rx, ry,
-    } = this.shape;
+    const { x, y, rx, ry } = this.shape;
     const { lineWidth, fillStyle } = this.brush;
 
     const k = 0.5522848;

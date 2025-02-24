@@ -3,14 +3,14 @@ import Shape, { ShapeOpts } from '../shape';
 import { transform, rotate, invert } from '../matrix';
 
 export interface ArrowShape {
-  x1: number
-  y1: number
-  x2: number
-  y2: number
+  x1: number;
+  y1: number;
+  x2: number;
+  y2: number;
 }
 
 export interface ArrowOpts extends ShapeOpts {
-  shape: ArrowShape
+  shape: ArrowShape;
 }
 
 export default class Arrow extends Shape<ArrowShape> {

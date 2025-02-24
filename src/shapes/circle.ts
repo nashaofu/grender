@@ -1,19 +1,19 @@
-import Bounds from '../bounds';
-import { transform } from '../matrix';
-import Shape, { ShapeOpts } from '../shape';
+import Bounds from "../bounds";
+import { transform } from "../matrix";
+import Shape, { ShapeOpts } from "../shape";
 
 export interface CircleShape {
-  x: number
-  y: number
-  r: number
+  x: number;
+  y: number;
+  r: number;
 }
 
 export interface CircleOpts extends ShapeOpts {
-  shape: CircleShape
+  shape: CircleShape;
 }
 
 export default class Circle extends Shape<CircleShape> {
-  name = 'Circle';
+  name = "Circle";
 
   shape: CircleShape;
 
@@ -23,9 +23,10 @@ export default class Circle extends Shape<CircleShape> {
   }
 
   get bounds(): Bounds {
-    let { x, y, r } = this.shape;
+    let { x, y } = this.shape;
+    const { r } = this.shape;
     let { lineWidth } = this.brush;
-    lineWidth = typeof lineWidth === 'number' ? lineWidth : 0;
+    lineWidth = typeof lineWidth === "number" ? lineWidth : 0;
     lineWidth = lineWidth <= 0 ? 0 : lineWidth / 2;
 
     x = x - r - lineWidth;
@@ -41,7 +42,9 @@ export default class Circle extends Shape<CircleShape> {
       return false;
     }
 
-    let { x, y, r } = this.shape;
+    const { x, y } = this.shape;
+    let { r } = this.shape;
+
     const { lineWidth } = this.brush;
     if (this.GIM) {
       const p = transform([px, py], this.GIM);
@@ -49,7 +52,7 @@ export default class Circle extends Shape<CircleShape> {
       py = p[1];
     }
 
-    if (typeof lineWidth === 'number') {
+    if (typeof lineWidth === "number") {
       r += lineWidth / 2;
     }
 

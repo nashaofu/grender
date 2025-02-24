@@ -39,7 +39,7 @@ export default class Bounds {
     const { GIM } = this.shape;
 
     if (GIM) {
-      // eslint-disable-next-line no-param-reassign
+       
       [x, y] = transform([x, y], GIM);
     }
 
